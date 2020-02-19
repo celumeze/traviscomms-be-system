@@ -27,8 +27,10 @@ namespace FlexiComms.Data.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(FlexiCommsDbContext).Assembly);            
             AuditShadowProperties(modelBuilder);
+            modelBuilder.Seed();
+            modelBuilder.HasDefaultContainer("FlexiCommsDbDocuments");
         }
 
         public override int SaveChanges()
