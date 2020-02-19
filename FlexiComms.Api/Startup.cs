@@ -28,7 +28,7 @@ namespace FlexiComms.Api
         public void ConfigureServices(IServiceCollection services)
         {
             CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
-            Configuration.Bind("CosmosDbSettings", cosmosDbConfig);
+            Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
             StartupDb.ConfigureServices(services, cosmosDbConfig);
         }
 
