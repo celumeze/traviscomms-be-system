@@ -1,0 +1,18 @@
+﻿using FlexiComms.Data.Entities.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace FlexiComms.Data.Repository.Configuration
+{
+    public class CompanyConfiguration : IEntityTypeConfiguration<Company>
+    {
+        public void Configure(EntityTypeBuilder<Company> builder)
+        {
+            builder.HasKey(x => x.CompanyId);
+            builder.Property(x => x.Name).HasMaxLength(70).IsRequired().IsUnicode(false);
+        }
+    }
+}

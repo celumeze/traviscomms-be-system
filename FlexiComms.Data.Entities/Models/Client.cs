@@ -6,10 +6,14 @@ namespace FlexiComms.Data.Entities.Models
 {
     public class Client
     {
+        public Client()
+        {
+            Companies = new List<Company>();
+        }
         public Guid ClientId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Company Company { get; set; }
-        public ServiceProvider ServiceProvider { get; set; }
+        public List<Company> Companies { get; set; }
+        public ClientServiceProvider ClientServiceProvider { get; set; }
     }
 }

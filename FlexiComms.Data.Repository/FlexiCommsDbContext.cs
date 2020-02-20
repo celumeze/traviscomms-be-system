@@ -1,4 +1,5 @@
-﻿using FlexiComms.Data.Entities.Models;
+﻿using FlexiComms.Data.Entities;
+using FlexiComms.Data.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ namespace FlexiComms.Data.Repository
             return base.SaveChanges();
         }
 
+        public DbSet<ClientServiceProvider> ClientsServiceProviders { get; set; }
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Company> Companies { get; set; }
