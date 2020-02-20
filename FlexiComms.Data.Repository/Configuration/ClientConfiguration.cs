@@ -14,7 +14,7 @@ namespace FlexiComms.Data.Repository.Configuration
             builder.HasKey(x => x.ClientId);
             builder.Property(x=>x.FirstName).HasMaxLength(50).IsRequired().IsUnicode(false);
             builder.Property(x => x.LastName).HasMaxLength(50).IsRequired().IsUnicode(false);
-            builder.OwnsOne(x => x.ClientServiceProvider);
+            builder.OwnsOne(x => x.SubscriptionType);
         }
     }
 }

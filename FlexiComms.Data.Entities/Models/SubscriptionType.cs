@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FlexiComms.Data.Entities
+namespace FlexiComms.Data.Entities.Models
 {
-    public class ServiceProvider
+    public class SubscriptionType
     {
         public string Name { get; set; }
     }
