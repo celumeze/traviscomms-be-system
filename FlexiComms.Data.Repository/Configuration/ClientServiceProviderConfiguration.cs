@@ -15,7 +15,10 @@ namespace FlexiComms.Data.Repository.Configuration
             builder.Property(x => x.AccountSid).HasMaxLength(100).IsRequired().IsUnicode(false);
             builder.Property(x => x.AuthToken).HasMaxLength(100).IsRequired().IsUnicode(false);
             builder.Property(x => x.PhoneNumber).HasMaxLength(20).IsRequired().IsUnicode(false);
-            builder.OwnsOne(x => x.ServiceProvider);
-        }        
+            builder.HasOne(x => x.ServiceProvider)
+                    .WithMany(x => x.ClientServiceProviders)
+                    .HasForeignKey(x => x.ServiceProviderId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+        }
     }
 }

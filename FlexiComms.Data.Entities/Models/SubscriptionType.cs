@@ -4,8 +4,11 @@ using System.Text;
 
 namespace FlexiComms.Data.Entities.Models
 {
-    public class SubscriptionType
+    public class SubscriptionType : EntityBase
     {
+        public Guid SubscriptionTypeId { get; set; }
         public string Name { get; set; }
+
+        public List<Client> Clients { get; set; }
     }
 }

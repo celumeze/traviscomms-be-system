@@ -20,6 +20,7 @@ namespace FlexiComms.Api
             {
                 var noSqlContext = serviceScope.ServiceProvider.GetRequiredService<FlexiCommsDbContext>();
                 noSqlContext.Database.EnsureCreated();
+                ModelBuilderExtension.Seed(noSqlContext);
             }
             host.Run();
 

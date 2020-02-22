@@ -12,9 +12,13 @@ namespace FlexiComms.Data.Repository.Configuration
         public void Configure(EntityTypeBuilder<Client> builder)
         {
             builder.HasKey(x => x.ClientId);
-            builder.Property(x=>x.FirstName).HasMaxLength(50).IsRequired().IsUnicode(false);
+            builder.Property(x => x.FirstName).HasMaxLength(50).IsRequired().IsUnicode(false);
             builder.Property(x => x.LastName).HasMaxLength(50).IsRequired().IsUnicode(false);
-            builder.OwnsOne(x => x.SubscriptionType);
+            builder.HasOne(x => x.SubscriptionType)
+                   .WithMany(x => x.Clients)
+                   .HasForeignKey(x => x.SubscriptionTypeId)
+                   .OnDelete(DeleteBehavior.ClientCascade);
+                   
         }
     }
 }

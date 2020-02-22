@@ -13,6 +13,7 @@ namespace FlexiComms.Data.Entities.Models
         public Guid ClientId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Guid SubscriptionTypeId { get; set; }
 
         public List<Company> Companies { get; set; }
         public ClientServiceProvider ClientServiceProvider { get; set; }
