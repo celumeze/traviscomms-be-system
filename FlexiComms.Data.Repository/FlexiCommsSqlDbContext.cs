@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace FlexiComms.Data.Repository
 {
-    public class FlexiCommsDbContext : DbContext
+    public class FlexiCommsSqlDbContext : DbContext
     {
-        public FlexiCommsDbContext(DbContextOptions options) : base(options)
+        public FlexiCommsSqlDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -32,9 +32,9 @@ namespace FlexiComms.Data.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(FlexiCommsDbContext).Assembly);            
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(FlexiCommsSqlDbContext).Assembly);
+            modelBuilder.Seed();
             AuditShadowProperties(modelBuilder);
-            modelBuilder.HasDefaultContainer("FlexiCommsDbDocuments");          
         }
 
         public override int SaveChanges()

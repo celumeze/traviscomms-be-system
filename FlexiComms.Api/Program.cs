@@ -18,9 +18,8 @@ namespace FlexiComms.Api
             var host = CreateHostBuilder(args).Build();
             using (var serviceScope = host.Services.CreateScope())
             {
-                var noSqlContext = serviceScope.ServiceProvider.GetRequiredService<FlexiCommsDbContext>();
-                noSqlContext.Database.EnsureCreated();
-                ModelBuilderExtension.Seed(noSqlContext);
+                var sqlContext = serviceScope.ServiceProvider.GetRequiredService<FlexiCommsSqlDbContext>();
+                sqlContext.Database.EnsureCreated();
             }
             host.Run();
 
