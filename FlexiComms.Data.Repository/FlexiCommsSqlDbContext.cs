@@ -1,5 +1,7 @@
 ﻿using FlexiComms.Data.Entities;
 using FlexiComms.Data.Entities.Models;
+using FlexiComms.Data.Repository.IdentityModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace FlexiComms.Data.Repository
 {
-    public class FlexiCommsSqlDbContext : DbContext
+    public class FlexiCommsSqlDbContext : IdentityDbContext<MainUser, MainRole, string>
     {
-        public FlexiCommsSqlDbContext(DbContextOptions options) : base(options)
+        public FlexiCommsSqlDbContext(DbContextOptions<FlexiCommsSqlDbContext> options) : base(options)
         {
         }
 
@@ -32,6 +34,7 @@ namespace FlexiComms.Data.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(FlexiCommsSqlDbContext).Assembly);
             modelBuilder.Seed();
             AuditShadowProperties(modelBuilder);

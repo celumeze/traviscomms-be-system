@@ -12,7 +12,9 @@ namespace FlexiComms.Data.Repository.Configuration
         public void Configure(EntityTypeBuilder<Company> builder)
         {
             builder.HasKey(x => x.CompanyId);
+            builder.Property(x => x.CompanyId).ValueGeneratedOnAdd();
             builder.Property(x => x.Name).HasMaxLength(70).IsRequired().IsUnicode(false);
+            builder.HasIndex(x => x.Name).IsUnique(false);
         }
     }
 }
