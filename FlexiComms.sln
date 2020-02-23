@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiComms.Api", "FlexiComms.Api\FlexiComms.Api.csproj", "{33FFF425-692B-4579-95F0-B88BD5EA71F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexiComms.Api", "FlexiComms.Api\FlexiComms.Api.csproj", "{33FFF425-692B-4579-95F0-B88BD5EA71F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiComms.Data.Entities", "FlexiComms.Data.Entities\FlexiComms.Data.Entities.csproj", "{7EE068EC-36F9-4AE8-B9F5-C2779741E9B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexiComms.Data.Entities", "FlexiComms.Data.Entities\FlexiComms.Data.Entities.csproj", "{7EE068EC-36F9-4AE8-B9F5-C2779741E9B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiComms.Data.Repository", "FlexiComms.Data.Repository\FlexiComms.Data.Repository.csproj", "{2C9333CF-6F99-4ADA-A2A0-CBFD8FD8FCD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexiComms.Data.Repository", "FlexiComms.Data.Repository\FlexiComms.Data.Repository.csproj", "{2C9333CF-6F99-4ADA-A2A0-CBFD8FD8FCD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiComms.Data.NoSql", "FlexiComms.Data.NoSql\FlexiComms.Data.NoSql.csproj", "{CB726A96-3C4F-459A-AA46-CD3E0D68D776}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{2C9333CF-6F99-4ADA-A2A0-CBFD8FD8FCD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C9333CF-6F99-4ADA-A2A0-CBFD8FD8FCD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C9333CF-6F99-4ADA-A2A0-CBFD8FD8FCD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB726A96-3C4F-459A-AA46-CD3E0D68D776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB726A96-3C4F-459A-AA46-CD3E0D68D776}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB726A96-3C4F-459A-AA46-CD3E0D68D776}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB726A96-3C4F-459A-AA46-CD3E0D68D776}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

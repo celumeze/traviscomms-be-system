@@ -28,8 +28,10 @@ namespace FlexiComms.Api
         public void ConfigureServices(IServiceCollection services)
         {
             CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
+            SQLDbConfig sqlDbConfig = new SQLDbConfig();
             Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
-            StartupDb.ConfigureServices(services, cosmosDbConfig);           
+            Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
+            StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

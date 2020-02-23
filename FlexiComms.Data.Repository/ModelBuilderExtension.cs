@@ -10,18 +10,15 @@ namespace FlexiComms.Data.Repository
 {
     public static class ModelBuilderExtension
     {
-        public static void Seed(FlexiCommsDbContext context)
-        {
-            
-                SeedServiceProviders(context);
-                SeedSubscriptionTypes(context);
-                context.SaveChanges();            
+        public static void Seed(this ModelBuilder modelBuilder)
+        {            
+                SeedServiceProviders(modelBuilder);
+                SeedSubscriptionTypes(modelBuilder);
         }
 
-        private static void SeedServiceProviders(FlexiCommsDbContext context)
+        private static void SeedServiceProviders(ModelBuilder modelBuilder)
         {
-            var serviceProviders = new List<ServiceProvider>
-            {
+            modelBuilder.Entity<ServiceProvider>().HasData(            
                 new ServiceProvider
                 {
                     ServiceProviderId = Guid.NewGuid(),
@@ -32,14 +29,12 @@ namespace FlexiComms.Data.Repository
                     ServiceProviderId = Guid.NewGuid(),
                     Name = "Nexmo"
                 }
-            };
-            if (!context.ServiceProviders.ToList().Any())  context.AddRange(serviceProviders);            
+            );
         }
 
-        private static void SeedSubscriptionTypes(FlexiCommsDbContext context)
+        private static void SeedSubscriptionTypes(ModelBuilder modelBuilder)
         {
-            var subscriptionTypes = new List<SubscriptionType>
-            {
+            modelBuilder.Entity<SubscriptionType>().HasData(
                 new SubscriptionType
                 {
                     SubscriptionTypeId = Guid.NewGuid(),
@@ -50,8 +45,7 @@ namespace FlexiComms.Data.Repository
                     SubscriptionTypeId = Guid.NewGuid(),
                     Name = "Paid"
                 }
-            };
-            if (!context.SubscriptionTypes.ToList().Any()) context.AddRange(subscriptionTypes);
+            );
         }
     }
 }
