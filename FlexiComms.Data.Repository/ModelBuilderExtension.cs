@@ -1,4 +1,5 @@
-﻿using FlexiComms.Data.Entities.Models;
+﻿using FlexiComms.Data.Entities.Enums;
+using FlexiComms.Data.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace FlexiComms.Data.Repository
         {            
                 SeedServiceProviders(modelBuilder);
                 SeedSubscriptionTypes(modelBuilder);
+                SeedClientRole(modelBuilder);
         }
 
         private static void SeedServiceProviders(ModelBuilder modelBuilder)
@@ -44,6 +46,22 @@ namespace FlexiComms.Data.Repository
                 {
                     SubscriptionTypeId = Guid.NewGuid(),
                     Name = "Paid"
+                }
+            );
+        }
+
+        private static void SeedClientRole(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ClientRole>().HasData(
+                new ClientRole
+                {
+                    ClientRoleId = Guid.NewGuid(),
+                    RoleType = RoleType.AdminRoleType
+                },
+                new ClientRole
+                {
+                    ClientRoleId = Guid.NewGuid(),
+                    RoleType = RoleType.SubRoleType
                 }
             );
         }
