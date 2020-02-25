@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexiComms.Data.Entities", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexiComms.Data.Repository", "FlexiComms.Data.Repository\FlexiComms.Data.Repository.csproj", "{2C9333CF-6F99-4ADA-A2A0-CBFD8FD8FCD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiComms.Data.NoSql", "FlexiComms.Data.NoSql\FlexiComms.Data.NoSql.csproj", "{CB726A96-3C4F-459A-AA46-CD3E0D68D776}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexiComms.Data.NoSql", "FlexiComms.Data.NoSql\FlexiComms.Data.NoSql.csproj", "{CB726A96-3C4F-459A-AA46-CD3E0D68D776}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiComms.Data.Tests", "FlexiComms.Data.Tests\FlexiComms.Data.Tests.csproj", "{82478CC7-4B92-46FA-A46B-E39D493F94C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CB726A96-3C4F-459A-AA46-CD3E0D68D776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB726A96-3C4F-459A-AA46-CD3E0D68D776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB726A96-3C4F-459A-AA46-CD3E0D68D776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82478CC7-4B92-46FA-A46B-E39D493F94C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82478CC7-4B92-46FA-A46B-E39D493F94C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82478CC7-4B92-46FA-A46B-E39D493F94C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82478CC7-4B92-46FA-A46B-E39D493F94C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
