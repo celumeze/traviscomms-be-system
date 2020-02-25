@@ -38,43 +38,7 @@ namespace FlexiComms.Data.Repository
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(FlexiCommsSqlDbContext).Assembly);
             modelBuilder.Seed();
             AuditShadowProperties(modelBuilder);
-        }
-
-        public override int SaveChanges()
-        {
-            var timeStamp = DateTime.Now;
-            foreach (var entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified && !e.Metadata.IsOwned()))
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Property(nameof(EntityBase.DateModified)).CurrentValue = timeStamp;
-                }
-
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Property(nameof(EntityBase.DateCreated)).CurrentValue = timeStamp;
-                }
-            }
-            return base.SaveChanges();
-        }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            var timeStamp = DateTime.Now;
-            foreach (var entry in ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified && !e.Metadata.IsOwned()))
-            {
-                if (entry.State == EntityState.Modified)
-                {
-                    entry.Property(nameof(EntityBase.DateModified)).CurrentValue = timeStamp;
-                }
-                   
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Property(nameof(EntityBase.DateCreated)).CurrentValue = timeStamp;
-                }
-            }
-            return base.SaveChangesAsync(cancellationToken);
-        }
+        }      
 
         public DbSet<ClientServiceProvider> ClientsServiceProviders { get; set; }
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
