@@ -11,6 +11,6 @@ namespace FlexiComms.Api.Dto
         public Guid ServiceProviderId { get; set; }
         public string Name { get; set; }
 
-        public List<ClientServiceProvider> ClientServiceProviders { get; set; }
+        public List<ClientServiceProviderDto> ClientServiceProviders { get; set; }
     }
 }
