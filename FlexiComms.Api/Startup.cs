@@ -27,11 +27,21 @@ namespace FlexiComms.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc("FlexicommsOpenAPISpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Flexicomms API",
+                    Version = "1"
+                    //Contact = new Microsoft.OpenApi.Models.OpenApiContact() { Name = "Charles Elumeze", Email = "charleelumeze@gmail.com" }
+                });
+            });
             CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
             SQLDbConfig sqlDbConfig = new SQLDbConfig();
             Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
             Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
-            StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);           
+            StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,16 +52,24 @@ namespace FlexiComms.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
-            //app.UseRouting();
+            app.UseSwagger();
 
-            //app.UseAuthorization();
+            app.UseSwaggerUI(setupAction => 
+            {
+                setupAction.SwaggerEndpoint("/swagger/FlexicommsOpenAPISpecification/swagger.json", "Flexicomms API");
+                setupAction.RoutePrefix = string.Empty;
+            });
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace FlexiComms.Data.Repository
 {
-    public class FlexiCommsNoSqlDbContext : DbContext
+    public class FlexiCommsNoSqlDbContext 
     {
-        public FlexiCommsNoSqlDbContext(DbContextOptions options) : base(options)
-        {
-        }
+        //public FlexiCommsNoSqlDbContext(DbContextOptions options) : base(options)
+        //{
+        //}
     }
 }

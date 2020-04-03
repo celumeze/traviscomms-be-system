@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 namespace FlexiComms.Api.Dto
 {
     public class ClientDto
-    {
-        public Client()
-        {
-            Companies = new List<Company>();
-        }
+    {       
         public Guid ClientId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

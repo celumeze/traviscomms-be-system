@@ -14,6 +14,9 @@ namespace FlexiComms.Data.Repository
 {
     public class FlexiCommsSqlDbContext : IdentityDbContext<MainUser, MainRole, string>
     {
+        public FlexiCommsSqlDbContext()
+        {
+        }
         public FlexiCommsSqlDbContext(DbContextOptions<FlexiCommsSqlDbContext> options) : base(options)
         {
         }
