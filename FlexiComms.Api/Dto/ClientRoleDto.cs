@@ -9,7 +9,7 @@ namespace FlexiComms.Api.Dto
     public class ClientRoleDto
     {
         public Guid ClientRoleId { get; set; }
-        public RoleType RoleType { get; set; }
+        //public RoleType RoleType { get; set; }
 
         public List<ClientDto> Clients { get; set; }
     }

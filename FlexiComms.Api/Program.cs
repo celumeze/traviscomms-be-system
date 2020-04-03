@@ -15,14 +15,7 @@ namespace FlexiComms.Api
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-            using (var serviceScope = host.Services.CreateScope())
-            {
-                var sqlContext = serviceScope.ServiceProvider.GetRequiredService<FlexiCommsSqlDbContext>();
-                sqlContext.Database.EnsureCreated();
-            }
-            host.Run();
-
+            CreateHostBuilder(args).Build().Run();          
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
