@@ -19,6 +19,7 @@ namespace FlexiComms.Data.Repository.Repository
 
         public Client AddClient(Client client)
         {
+            client.ClientId = Guid.NewGuid();
             _flexiCommsSqlDbContext.Entry(client).State = EntityState.Added;
             return client;
         }

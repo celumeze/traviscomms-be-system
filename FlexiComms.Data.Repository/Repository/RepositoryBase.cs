@@ -24,14 +24,18 @@ namespace FlexiComms.Data.Repository.Repository
             var timeStamp = DateTime.Now;
             foreach (var entry in _flexiCommsSqlDbContext.ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified && !e.Metadata.IsOwned()))
             {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property(nameof(EntityBase.DateModified)).CurrentValue = timeStamp;
+                    entry.Property(nameof(EntityBase.ModifiedBy)).CurrentValue = "FlexiComms\\System";
+                    entry.Property(nameof(EntityBase.DateCreated)).CurrentValue = timeStamp;
+                    entry.Property(nameof(EntityBase.CreatedBy)).CurrentValue = "FlexiComms\\System";
+                }
+
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Property(nameof(EntityBase.DateModified)).CurrentValue = timeStamp;
-                }
-
-                if (entry.State == EntityState.Added)
-                {
-                    entry.Property(nameof(EntityBase.DateCreated)).CurrentValue = timeStamp;
+                    entry.Property(nameof(EntityBase.ModifiedBy)).CurrentValue = "FlexiComms\\System";
                 }
             }
             return _flexiCommsSqlDbContext.SaveChangesAsync();
@@ -45,11 +49,15 @@ namespace FlexiComms.Data.Repository.Repository
                 if (entry.State == EntityState.Added)
                 {
                     entry.Property(nameof(EntityBase.DateModified)).CurrentValue = timeStamp;
+                    entry.Property(nameof(EntityBase.ModifiedBy)).CurrentValue = "FlexiComms\\System";
+                    entry.Property(nameof(EntityBase.DateCreated)).CurrentValue = timeStamp;
+                    entry.Property(nameof(EntityBase.CreatedBy)).CurrentValue = "FlexiComms\\System";
                 }
 
-                if (entry.State == EntityState.Added)
+                if (entry.State == EntityState.Modified)
                 {
-                    entry.Property(nameof(EntityBase.DateCreated)).CurrentValue = timeStamp;
+                    entry.Property(nameof(EntityBase.DateModified)).CurrentValue = timeStamp;
+                    entry.Property(nameof(EntityBase.ModifiedBy)).CurrentValue = "FlexiComms\\System";
                 }
             }
             return _flexiCommsSqlDbContext.SaveChanges();

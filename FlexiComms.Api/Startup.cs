@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using FlexiComms.Api.Profiles;
 using FlexiComms.Data.Repository;
 using FlexiComms.Data.Repository.Bindings;
 using Microsoft.AspNetCore.Builder;
@@ -33,15 +35,16 @@ namespace FlexiComms.Api
                 setupAction.SwaggerDoc("FlexicommsOpenAPISpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
                     Title = "Flexicomms API",
-                    Version = "1"
-                    //Contact = new Microsoft.OpenApi.Models.OpenApiContact() { Name = "Charles Elumeze", Email = "charleelumeze@gmail.com" }
+                    Version = "1",
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact() { Name = "Charles Elumeze", Email = "charleelumeze@gmail.com" }
                 });
             });
             CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
             SQLDbConfig sqlDbConfig = new SQLDbConfig();
             Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
             Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
-            StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);        
+            StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

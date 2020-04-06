@@ -10,7 +10,5 @@ namespace FlexiComms.Api.Dto
     {
         public Guid SubscriptionTypeId { get; set; }
         public string Name { get; set; }
-
-        public List<ClientDto> Clients { get; set; }
     }
 }
