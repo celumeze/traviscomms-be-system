@@ -1,4 +1,5 @@
 ﻿using FlexiComms.Data.Repository.Bindings;
+using FlexiComms.Data.Repository.Extensions;
 using FlexiComms.Data.Repository.IdentityModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace FlexiComms.Data.Repository
             serviceCollection.AddDbContextPool<FlexiCommsSqlDbContext>(opt => opt.UseSqlServer(sqlConnectionString.ConnectionString));
             serviceCollection.AddIdentityCore<MainUser>(options => { });
             serviceCollection.AddScoped<IUserStore<MainUser>, UserStore<MainUser, MainRole, FlexiCommsSqlDbContext>>();
+            serviceCollection.AddRepositories();
         }
     }
 }
