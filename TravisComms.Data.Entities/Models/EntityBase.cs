@@ -9,9 +9,9 @@ namespace TravisComms.Data.Entities.Models
     {
 
         [Required]
-        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime DateCreated { get; set; }
         [MaxLength(50)]
-        public string CreatedBy { get; set; } = "TravisComms\\System";
+        public string CreatedBy { get; set; }
 
         public DateTime? DateModified { get; set; } 
         [MaxLength(50)]

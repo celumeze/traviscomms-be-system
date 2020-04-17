@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravisComms.Data.Repository;
 
 namespace TravisComms.Data.Repository.Migrations
 {
     [DbContext(typeof(TravisCommsSqlDbContext))]
-    partial class TravisCommsSqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200417171112_CorrectSeedAspNetRolesTableIssue")]
+    partial class CorrectSeedAspNetRolesTableIssue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

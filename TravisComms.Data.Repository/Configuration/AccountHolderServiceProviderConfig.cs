@@ -7,7 +7,7 @@ using System.Text;
 
 namespace TravisComms.Data.Repository.Configuration
 {
-    public class AccountHolderServiceProviderConfiguration : IEntityTypeConfiguration<AccountHolderServiceProvider>
+    public class AccountHolderServiceProviderConfig : IEntityTypeConfiguration<AccountHolderServiceProvider>
     {
         public void Configure(EntityTypeBuilder<AccountHolderServiceProvider> builder)
         {

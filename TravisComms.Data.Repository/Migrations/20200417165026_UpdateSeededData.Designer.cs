@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravisComms.Data.Repository;
 
 namespace TravisComms.Data.Repository.Migrations
 {
     [DbContext(typeof(TravisCommsSqlDbContext))]
-    partial class TravisCommsSqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200417165026_UpdateSeededData")]
+    partial class UpdateSeededData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,14 +275,14 @@ namespace TravisComms.Data.Repository.Migrations
                         {
                             AccountHolderRoleId = new Guid("cb0a792b-bf55-46b5-8795-10c43006be92"),
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2020, 4, 17, 17, 50, 25, 125, DateTimeKind.Local).AddTicks(8647),
                             RoleType = 1
                         },
                         new
                         {
                             AccountHolderRoleId = new Guid("37c9973f-9436-4f49-89ef-1e7b2d2398e4"),
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2020, 4, 17, 17, 50, 25, 126, DateTimeKind.Local).AddTicks(682),
                             RoleType = 2
                         });
                 });
@@ -399,21 +401,21 @@ namespace TravisComms.Data.Repository.Migrations
                         {
                             ServiceProviderId = new Guid("3f6625ae-9fca-4975-99c2-2ca362e55825"),
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2020, 4, 17, 17, 50, 25, 116, DateTimeKind.Local).AddTicks(2997),
                             Name = "Twilio"
                         },
                         new
                         {
                             ServiceProviderId = new Guid("8b07f619-cff8-4795-9a22-cbca1493cf02"),
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2020, 4, 17, 17, 50, 25, 121, DateTimeKind.Local).AddTicks(2150),
                             Name = "Vonage"
                         },
                         new
                         {
                             ServiceProviderId = new Guid("873c3886-ce7d-42bd-b48c-05f41b36212f"),
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2020, 4, 17, 17, 50, 25, 121, DateTimeKind.Local).AddTicks(2263),
                             Name = "Whatsapp"
                         });
                 });
@@ -461,7 +463,7 @@ namespace TravisComms.Data.Repository.Migrations
                         {
                             SubscriptionTypeId = new Guid("360cf2ed-3705-4248-a4a4-b15c8a3077de"),
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2020, 4, 17, 17, 50, 25, 123, DateTimeKind.Local).AddTicks(9053),
                             Name = "Trial",
                             PeriodInDays = 2,
                             Price = 0m
@@ -470,7 +472,7 @@ namespace TravisComms.Data.Repository.Migrations
                         {
                             SubscriptionTypeId = new Guid("55404fe5-0ff5-4cae-9b30-69263baf424f"),
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
+                            DateCreated = new DateTime(2020, 4, 17, 17, 50, 25, 124, DateTimeKind.Local).AddTicks(2728),
                             Name = "Paid",
                             PeriodInDays = 31,
                             Price = 45m
@@ -523,23 +525,23 @@ namespace TravisComms.Data.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "833583c3-1d58-4b95-baad-05b35acdd6a3",
+                            Id = "e5299393-bfbb-41b1-9a5e-c74b7634adb4",
                             ClientRoleId = new Guid("cb0a792b-bf55-46b5-8795-10c43006be92"),
-                            ConcurrencyStamp = "ef51e739-98e5-4455-9ae0-061ebfdda460",
+                            ConcurrencyStamp = "d98bc5ab-29e3-458e-afdd-52bccada96cb",
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            DateCreated = new DateTime(2020, 4, 17, 17, 57, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(2020, 4, 17, 17, 57, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Admin"
                         },
                         new
                         {
-                            Id = "ebd48401-7db4-43e5-ae50-211fa5d87ac8",
+                            Id = "ab7b1a88-805c-4f29-9dea-591d5697138b",
                             ClientRoleId = new Guid("37c9973f-9436-4f49-89ef-1e7b2d2398e4"),
-                            ConcurrencyStamp = "be15a41d-2400-45cf-bb50-9c6394d9ef25",
+                            ConcurrencyStamp = "80a8fe61-a8ec-4250-ae7a-fc3129de8a35",
                             CreatedBy = "TravisComms\\System",
-                            DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
-                            Name = "SubRole",
-                            NormalizedName = "SUBROLE"
+                            DateCreated = new DateTime(2020, 4, 17, 17, 57, 0, 0, DateTimeKind.Unspecified),
+                            DateModified = new DateTime(2020, 4, 17, 17, 57, 0, 0, DateTimeKind.Unspecified),
+                            Name = "SubRole"
                         });
                 });
 

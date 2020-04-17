@@ -7,18 +7,37 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200223232711_ShouldBeEmpty.cs" />
     <Compile Remove="Migrations\20200223232711_ShouldBeEmpty.Designer.cs" />
+    <Compile Remove="Migrations\20200417132637_TestMigration.cs" />
+    <Compile Remove="Migrations\20200417132637_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200417153325_ChangedClientToAccountHolder.cs" />
+    <Compile Remove="Migrations\20200417153325_ChangedClientToAccountHolder.Designer.cs" />
+    <Compile Remove="Migrations\20200417163042_TestMigration.cs" />
+    <Compile Remove="Migrations\20200417163042_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200417165212_TestMigration.cs" />
+    <Compile Remove="Migrations\20200417165212_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200417170137_TestMigration.cs" />
+    <Compile Remove="Migrations\20200417170137_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200417171258_TestMigration.cs" />
+    <Compile Remove="Migrations\20200417171258_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\ConfigurationDb\20200417163430_TestMigration.cs" />
+    <Compile Remove="Migrations\ConfigurationDb\20200417163430_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\PersistedGrantDb\20200417163551_TestMigration.cs" />
+    <Compile Remove="Migrations\PersistedGrantDb\20200417163551_TestMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="3.1.2" />
+    <PackageReference Include="IdentityModel" Version="4.2.0" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.2" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.3" />
   </ItemGroup>
 
   <ItemGroup>    

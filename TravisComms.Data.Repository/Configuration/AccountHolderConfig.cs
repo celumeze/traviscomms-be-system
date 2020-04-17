@@ -4,7 +4,7 @@ using TravisComms.Data.Entities.Models;
 
 namespace TravisComms.Data.Repository.Configuration
 {
-    public class AccountHolderConfiguration : IEntityTypeConfiguration<AccountHolder>
+    public class AccountHolderConfig : IEntityTypeConfiguration<AccountHolder>
     {
         public void Configure(EntityTypeBuilder<AccountHolder> builder)
         {

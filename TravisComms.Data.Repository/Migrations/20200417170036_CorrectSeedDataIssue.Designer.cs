@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravisComms.Data.Repository;
 
 namespace TravisComms.Data.Repository.Migrations
 {
     [DbContext(typeof(TravisCommsSqlDbContext))]
-    partial class TravisCommsSqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200417170036_CorrectSeedDataIssue")]
+    partial class CorrectSeedDataIssue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -528,8 +530,7 @@ namespace TravisComms.Data.Repository.Migrations
                             ConcurrencyStamp = "ef51e739-98e5-4455-9ae0-061ebfdda460",
                             CreatedBy = "TravisComms\\System",
                             DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            Name = "Admin"
                         },
                         new
                         {
@@ -538,8 +539,7 @@ namespace TravisComms.Data.Repository.Migrations
                             ConcurrencyStamp = "be15a41d-2400-45cf-bb50-9c6394d9ef25",
                             CreatedBy = "TravisComms\\System",
                             DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
-                            Name = "SubRole",
-                            NormalizedName = "SUBROLE"
+                            Name = "SubRole"
                         });
                 });
 
