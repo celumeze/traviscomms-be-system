@@ -86,11 +86,11 @@ namespace TravisComms.Data.Repository
         }
 
 
-        public DbSet<ClientServiceProvider> ClientsServiceProviders { get; set; }
+        public DbSet<AccountHolderServiceProvider> AccountHoldersServiceProviders { get; set; }
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
         public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<ClientRole> ClientRole { get; set; }
+        public DbSet<AccountHolder> AccountHolders { get; set; }
+        public DbSet<AccountHolderRole> AccountHoldersRole { get; set; }
         public DbSet<Company> Companies { get; set; }
     }
 }

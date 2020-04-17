@@ -5,11 +5,11 @@ using System.Text;
 
 namespace TravisComms.Data.Entities.Models
 {
-    public class ClientRole : EntityBase
+    public class AccountHolderRole : EntityBase
     {
-        public Guid ClientRoleId { get; set; }
+        public Guid AccountHolderRoleId { get; set; }
         public RoleType RoleType { get; set; }
 
-        public List<Client> Clients { get; set; }
+        public List<AccountHolder> AccountHolders { get; set; }
     }
 }

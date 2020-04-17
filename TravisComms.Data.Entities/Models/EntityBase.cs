@@ -11,7 +11,7 @@ namespace TravisComms.Data.Entities.Models
         [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
         [MaxLength(50)]
-        public string CreatedBy { get; set; } = "FlintComms\\System";
+        public string CreatedBy { get; set; } = "TravisComms\\System";
 
         public DateTime? DateModified { get; set; } 
         [MaxLength(50)]

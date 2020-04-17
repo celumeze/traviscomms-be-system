@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravisComms.Data.Repository.IdentityModels;
 
 namespace TravisComms.Data.Repository
 {
@@ -15,7 +16,7 @@ namespace TravisComms.Data.Repository
         {            
                 SeedServiceProviders(modelBuilder);
                 SeedSubscriptionTypes(modelBuilder);
-                SeedClientRole(modelBuilder);
+                SeedAccountHolderRole(modelBuilder);
         }
 
         private static void SeedServiceProviders(ModelBuilder modelBuilder)
@@ -29,7 +30,7 @@ namespace TravisComms.Data.Repository
                 new ServiceProvider
                 {
                     ServiceProviderId = Guid.NewGuid(),
-                    Name = "Nexmo"
+                    Name = "Vonage"
                 }
             );
         }
@@ -40,30 +41,48 @@ namespace TravisComms.Data.Repository
                 new SubscriptionType
                 {
                     SubscriptionTypeId = Guid.NewGuid(),
-                    Name = "Trial"
+                    Name = "Trial",
+                    PeriodInDays = 2,
+                    Price = 0
                 },
                 new SubscriptionType
                 {
                     SubscriptionTypeId = Guid.NewGuid(),
-                    Name = "Paid"
+                    Name = "Paid",
+                    PeriodInDays = 31,
+                    Price = 45
                 }
             );
         }
 
-        private static void SeedClientRole(ModelBuilder modelBuilder)
+        private static void SeedAccountHolderRole(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ClientRole>().HasData(
-                new ClientRole
+            var adminRoleId = Guid.NewGuid();
+            var subRoleId = Guid.NewGuid();
+            modelBuilder.Entity<AccountHolderRole>().HasData(
+                new AccountHolderRole
                 {
-                    ClientRoleId = Guid.NewGuid(),
+                    AccountHolderRoleId = adminRoleId,
                     RoleType = RoleType.AdminRoleType
                 },
-                new ClientRole
+                new AccountHolderRole
                 {
-                    ClientRoleId = Guid.NewGuid(),
+                    AccountHolderRoleId = subRoleId,
                     RoleType = RoleType.SubRoleType
                 }
             );
-        }
+            modelBuilder.Entity<MainRole>().HasData(
+              new MainRole
+              {
+                  ClientRoleId = adminRoleId,
+                  Name = "Admin"
+              },
+              new MainRole
+              {
+                  ClientRoleId = subRoleId,
+                  Name = "SubRole"
+              }
+          );
+        }     
     }
 }
