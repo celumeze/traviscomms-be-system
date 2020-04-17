@@ -19,19 +19,19 @@ namespace TravisComms.Api.Controllers
     {
         private readonly ILogger<RegistrationController> _logger;
         private readonly IIdentityRepository _identityRepository;
-        private readonly IClientRepository _clientRepository;
-        private readonly IClientRoleRepository _clientRoleRepository;
+        private readonly IAccountHolderRepository _accountHolderRepository;
+        private readonly IAccountHolderRoleRepository _accountHolderRoleRepository;
         private readonly IMapper _mapper;
         public RegistrationController(ILogger<RegistrationController> logger, 
                                       IIdentityRepository identityRepository,
-                                      IClientRepository clientRepository,
-                                      IClientRoleRepository clientRoleRepository,
+                                      IAccountHolderRepository accountHolderRepository,
+                                      IAccountHolderRoleRepository accountHolderRoleRepository,
                                       IMapper mapper)
         {
             _logger = logger;
             _identityRepository = identityRepository;
-            _clientRepository = clientRepository;
-            _clientRoleRepository = clientRoleRepository;
+            _accountHolderRepository = accountHolderRepository;
+            _accountHolderRoleRepository = accountHolderRoleRepository;
             _mapper = mapper;
         }
 
@@ -41,13 +41,13 @@ namespace TravisComms.Api.Controllers
             bool isUserExist = await _identityRepository.FindUserByEmailAsync(client.EmailAddress);
             if (!isUserExist)
             {
-                client.ClientRoleId = await _clientRoleRepository.GetClientRoleIdByRoleTypeAsync(Data.Entities.Enums.RoleType.AdminRoleType);
-                var clientCreated = _clientRepository.AddClient(_mapper.Map<Client>(client));
-                if(clientCreated != null)
+                client.ClientRoleId = await _accountHolderRoleRepository.GetAccountHolderRoleIdByRoleTypeAsync(Data.Entities.Enums.RoleType.AdminRoleType);
+                var accountHolderCreated = _accountHolderRepository.AddAccountHolder(_mapper.Map<AccountHolder>(client));
+                if(accountHolderCreated != null)
                 {
-                    client.ClientId = clientCreated.ClientId;
+                    client.ClientId = accountHolderCreated.AccountHolderId;
                     if(!string.IsNullOrEmpty(client.Company))
-                        clientCreated.Companies.Add(_mapper.Map<Company>(new CompanyDto { Name = client.Company }));
+                        accountHolderCreated.Companies.Add(_mapper.Map<Company>(new CompanyDto { Name = client.Company }));
                     var isUserCreated = await _identityRepository.CreateNewUser(_mapper.Map<MainUser>(client), client.Password);
                     if (isUserCreated)
                     {

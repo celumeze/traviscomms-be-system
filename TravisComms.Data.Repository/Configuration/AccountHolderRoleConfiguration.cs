@@ -7,12 +7,12 @@ using System.Text;
 
 namespace TravisComms.Data.Repository.Configuration
 {
-    public class ClientRoleConfiguration : IEntityTypeConfiguration<ClientRole>
+    public class AccountHolderRoleConfiguration : IEntityTypeConfiguration<AccountHolderRole>
     {
-        public void Configure(EntityTypeBuilder<ClientRole> builder)
+        public void Configure(EntityTypeBuilder<AccountHolderRole> builder)
         {
-            builder.HasKey(x => x.ClientRoleId);
-            builder.Property(x => x.ClientRoleId).ValueGeneratedOnAdd();
+            builder.HasKey(x => x.AccountHolderRoleId);
+            builder.Property(x => x.AccountHolderRoleId).ValueGeneratedOnAdd();
             builder.HasIndex(x => x.RoleType).IsUnique(false);
         }
     }

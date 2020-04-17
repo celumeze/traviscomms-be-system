@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TravisComms.Data.Entities.Models
 {
-    public class ClientServiceProvider
+    public class AccountHolderServiceProvider
     {
-        public Guid ClientServiceProviderId { get; set; }
+        public Guid AccountHolderServiceProviderId { get; set; }
         public string AuthToken { get; set; }
         public string AccountSid { get; set; }
         public string PhoneNumber { get; set; }

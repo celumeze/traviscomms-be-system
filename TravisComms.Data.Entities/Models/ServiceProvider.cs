@@ -9,6 +9,6 @@ namespace TravisComms.Data.Entities.Models
         public Guid ServiceProviderId { get; set; }
         public string Name { get; set; }
 
-        public List<ClientServiceProvider> ClientServiceProviders { get; set; }
+        public List<AccountHolderServiceProvider> AccountHolderServiceProviders { get; set; }
     }
 }

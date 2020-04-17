@@ -13,14 +13,14 @@ namespace TravisComms.Api.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<ClientDto, Client>();
+            CreateMap<ClientDto, AccountHolder>();
             CreateMap<CompanyDto, Company>();
             CreateMap<ClientDto, MainUser>()
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.EmailAddress))                
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src=>src.EmailAddress));
             CreateMap<SubscriptionTypeDto, SubscriptionType>();
-            CreateMap<ClientRole, ClientRoleDto>();
-            CreateMap<ClientRoleDto, ClientRole>();
+            CreateMap<AccountHolderRole, ClientRoleDto>();
+            CreateMap<ClientRoleDto, AccountHolderRole>();
         }
     }
 }

@@ -8,7 +8,9 @@ namespace TravisComms.Data.Entities.Models
     {
         public Guid SubscriptionTypeId { get; set; }
         public string Name { get; set; }
+        public decimal  Price { get; set; }
+        public int PeriodInDays { get; set; }
 
-        public List<Client> Clients { get; set; }
+        public List<AccountHolder> AccountHolders { get; set; }
     }
 }

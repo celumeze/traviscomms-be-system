@@ -12,6 +12,6 @@ namespace TravisComms.Data.Entities.Models
         public string LastName { get; set; }
         public string Password { get; set; }
 
-        public Client Client { get; set; }
+        public AccountHolder AccountHolder { get; set; }
     }
 }

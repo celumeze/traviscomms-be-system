@@ -4,22 +4,23 @@ using System.Text;
 
 namespace TravisComms.Data.Entities.Models
 {
-    public class Client
+    public class AccountHolder
     {
-        public Client()
+        public AccountHolder()
         {
             Companies = new List<Company>();
         }
-        public Guid ClientId { get; set; }
+        public Guid AccountHolderId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool Active { get; set; }
+        public bool IsAccountDeleted { get; set; }
         public Guid SubscriptionTypeId { get; set; }
-        public Guid ClientRoleId { get; set; }
+        public Guid AccountHolderRoleId { get; set; }
 
         public List<Company> Companies { get; set; }
-        public ClientServiceProvider ClientServiceProvider { get; set; }
+        public AccountHolderServiceProvider AccountHolderServiceProvider { get; set; }
         public SubscriptionType SubscriptionType { get; set; }
-        public ClientRole ClientRole { get; set; }
+        public AccountHolderRole AccountHolderRole { get; set; }
     }
 }
