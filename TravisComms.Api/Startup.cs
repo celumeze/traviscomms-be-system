@@ -43,7 +43,7 @@ namespace TravisComms.Api
             SQLDbConfig sqlDbConfig = new SQLDbConfig();
             Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
             Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
-            StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);
+            StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);           
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
         }
 

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace TravisComms.Data.Repository.Configuration
 {
-    public class CompanyConfiguration : IEntityTypeConfiguration<Company>
+    public class CompanyConfig : IEntityTypeConfiguration<Company>
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {

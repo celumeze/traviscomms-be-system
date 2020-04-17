@@ -14,7 +14,7 @@ namespace TravisComms.Data.Repository.Repository
         private readonly TravisCommsSqlDbContext _TravisCommsSqlDbContext;
         public AccountHolderRoleRepository(TravisCommsSqlDbContext TravisCommsSqlDbContext) : base(TravisCommsSqlDbContext)
         {
-
+            _TravisCommsSqlDbContext = TravisCommsSqlDbContext;
         }
 
         public async Task<Guid> GetAccountHolderRoleIdByRoleTypeAsync(RoleType roleType)
