@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace TravisComms.Api
 {
@@ -39,12 +42,14 @@ namespace TravisComms.Api
                     Contact = new Microsoft.OpenApi.Models.OpenApiContact() { Name = "Charles Elumeze", Email = "charleelumeze@gmail.com" }
                 });
             });
-            CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
-            SQLDbConfig sqlDbConfig = new SQLDbConfig();
-            Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
-            Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
-            StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);           
+                   
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            //adds authorize filter to all endpoints
+            services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +59,18 @@ namespace TravisComms.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                        await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
+                    });
+                });
+            }
+            
             app.UseHttpsRedirection();
 
             app.UseSwagger();
@@ -66,7 +82,7 @@ namespace TravisComms.Api
             });
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
