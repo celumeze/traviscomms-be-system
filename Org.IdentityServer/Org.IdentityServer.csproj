@@ -15,4 +15,8 @@
   <ItemGroup>
     <ProjectReference Include="..\TravisComms.Data.Repository\TravisComms.Data.Repository.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
 </Project>

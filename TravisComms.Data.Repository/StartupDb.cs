@@ -13,7 +13,7 @@ namespace TravisComms.Data.Repository
 {
     public static class StartupDb
     {
-        public static void ConfigureServices(IServiceCollection serviceCollection, CosmosDbConfig cosmosDbConfig, SQLDbConfig sqlConnection)
+        public static IIdentityServerBuilder ConfigureServices(IServiceCollection serviceCollection, CosmosDbConfig cosmosDbConfig, SQLDbConfig sqlConnection)
         {
          
             //serviceCollection.AddDbContext<TravisCommsNoSqlDbContext>(opt => opt.UseCosmos(cosmosDbConfig.ServiceEndpoint, cosmosDbConfig.AuthKey, cosmosDbConfig.DatabaseName));
@@ -26,10 +26,18 @@ namespace TravisComms.Data.Repository
             
             var migrationsAssembly = typeof(StartupDb).GetTypeInfo().Assembly.GetName().Name;
 
+            //Ef Core Migrations and Core Context Setup.
+            serviceCollection.AddDbContextPool<TravisCommsSqlDbContext>(opt =>
+                      opt.UseSqlServer(
+                          sqlConnection.ConnectionString,
+                          sqlServerOptions => sqlServerOptions.MigrationsAssembly(migrationsAssembly)
+             ));
+            serviceCollection.AddRepositories();
+
             //IdentityServer4
-            serviceCollection.AddIdentityServer()
+            return serviceCollection.AddIdentityServer()
                              .AddAspNetIdentity<MainUser>()
-                             .AddConfigurationStore(storeOptions => 
+                             .AddConfigurationStore(storeOptions =>
                              {
                                  storeOptions.ConfigureDbContext = builder =>
                                  builder.UseSqlServer(sqlConnection.ConnectionString, options => options.MigrationsAssembly(migrationsAssembly));
@@ -38,15 +46,7 @@ namespace TravisComms.Data.Repository
                              {
                                  storeOptions.ConfigureDbContext = builder =>
                                  builder.UseSqlServer(sqlConnection.ConnectionString, options => options.MigrationsAssembly(migrationsAssembly));
-                             });
-
-            //Ef Core Migrations and Core Context Setup.
-            serviceCollection.AddDbContextPool<TravisCommsSqlDbContext>(opt => 
-                      opt.UseSqlServer(
-                          sqlConnection.ConnectionString, 
-                          sqlServerOptions => sqlServerOptions.MigrationsAssembly(migrationsAssembly)
-                  ));
-            serviceCollection.AddRepositories();
+                             });                                                   
         }
     }
 }
