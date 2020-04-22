@@ -9,7 +9,7 @@ namespace TravisComms.Data.Repository.IdentityModels
 {
     public class MainRole : IdentityRole
     {
-        public Guid ClientRoleId { get; set; }
+        public Guid AccountHolderRoleId { get; set; }
         [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
         [MaxLength(50)]

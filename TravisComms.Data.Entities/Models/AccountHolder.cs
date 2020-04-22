@@ -16,7 +16,7 @@ namespace TravisComms.Data.Entities.Models
         public bool Active { get; set; }
         public bool IsAccountDeleted { get; set; }
         public bool IsUpgradedToPaid { get; set; }
-        public DateTime DateOfUpgrade { get; set; }
+        public DateTime? DateOfUpgrade { get; set; }
         public Guid SubscriptionTypeId { get; set; }
         public Guid AccountHolderRoleId { get; set; }
 

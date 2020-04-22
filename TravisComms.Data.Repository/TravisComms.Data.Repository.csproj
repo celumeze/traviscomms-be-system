@@ -19,6 +19,14 @@
     <Compile Remove="Migrations\20200417170137_TestMigration.Designer.cs" />
     <Compile Remove="Migrations\20200417171258_TestMigration.cs" />
     <Compile Remove="Migrations\20200417171258_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200422023508_TestMir.cs" />
+    <Compile Remove="Migrations\20200422023508_TestMir.Designer.cs" />
+    <Compile Remove="Migrations\20200422105953_TestMir.cs" />
+    <Compile Remove="Migrations\20200422105953_TestMir.Designer.cs" />
+    <Compile Remove="Migrations\20200422115211_Test.cs" />
+    <Compile Remove="Migrations\20200422115211_Test.Designer.cs" />
+    <Compile Remove="Migrations\20200422134217_Test.cs" />
+    <Compile Remove="Migrations\20200422134217_Test.Designer.cs" />
     <Compile Remove="Migrations\ConfigurationDb\20200417163430_TestMigration.cs" />
     <Compile Remove="Migrations\ConfigurationDb\20200417163430_TestMigration.Designer.cs" />
     <Compile Remove="Migrations\PersistedGrantDb\20200417163551_TestMigration.cs" />

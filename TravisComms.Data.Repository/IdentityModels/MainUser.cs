@@ -8,7 +8,7 @@ namespace TravisComms.Data.Repository.IdentityModels
 {
     public class MainUser : IdentityUser
     {
-        public Guid ClientId { get; set; }
+        public Guid AccountHolderId { get; set; }
 
     }
 }

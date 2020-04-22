@@ -10,10 +10,11 @@ using TravisComms.Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TravisComms.Api.Controllers
 {
-    [Route("api/registration/[controller]")]
+    [Route("api/register")]
     [ApiController]
     public class RegistrationController : ControllerBase
     {
@@ -35,23 +36,24 @@ namespace TravisComms.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("/register")]
-        public async Task<IActionResult> Register([FromBody]ClientDto client)
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody]AddAccountHolderDto addAccountHolderDto)
         {
-            bool isUserExist = await _identityRepository.FindUserByEmailAsync(client.EmailAddress);
+            bool isUserExist = await _identityRepository.FindUserByEmailAsync(addAccountHolderDto.EmailAddress);
             if (!isUserExist)
             {
-                client.ClientRoleId = await _accountHolderRoleRepository.GetAccountHolderRoleIdByRoleTypeAsync(Data.Entities.Enums.RoleType.AdminRoleType);
-                var accountHolderCreated = _accountHolderRepository.AddAccountHolder(_mapper.Map<AccountHolder>(client));
+                addAccountHolderDto.AccountHolderRoleId = await _accountHolderRoleRepository.GetAccountHolderRoleIdByRoleTypeAsync(Data.Entities.Enums.RoleType.AdminRoleType);
+                var accountHolderCreated = _accountHolderRepository.AddAccountHolder(_mapper.Map<AccountHolder>(addAccountHolderDto));
                 if(accountHolderCreated != null)
                 {
-                    client.ClientId = accountHolderCreated.AccountHolderId;
-                    if(!string.IsNullOrEmpty(client.Company))
-                        accountHolderCreated.Companies.Add(_mapper.Map<Company>(new CompanyDto { Name = client.Company }));
-                    var isUserCreated = await _identityRepository.CreateNewUser(_mapper.Map<MainUser>(client), client.Password);
+                    if(!string.IsNullOrEmpty(addAccountHolderDto.Company))
+                        accountHolderCreated.Companies.Add(_mapper.Map<Company>(new CompanyDto { Name = addAccountHolderDto.Company }));
+                    var isUserCreated = await _identityRepository.CreateNewUser(_mapper.Map<MainUser>(addAccountHolderDto), addAccountHolderDto.Password, 
+                                               accountHolderCreated.AccountHolderId);
                     if (isUserCreated)
-                    {
-                        return Ok("Verify email to complete registration");
+                    {                      
+                          return Ok("Verify email to complete registration");
                     }
                 }                               
             }           

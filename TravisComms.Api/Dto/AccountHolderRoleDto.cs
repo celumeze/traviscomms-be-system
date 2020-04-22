@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace TravisComms.Api.Dto
 {
-    public class ClientRoleDto
+    public class AccountHolderRoleDto
     {
-        public Guid ClientRoleId { get; set; }
+        public Guid AccountHolderRoleId { get; set; }
         public RoleType RoleType { get; set; }
     }
 }

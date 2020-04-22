@@ -14,6 +14,6 @@ namespace TravisComms.Api.Dto
         public string LastName { get; set; }
         public string Password { get; set; }
 
-        public ClientDto Client { get; set; }
+        public AddAccountHolderDto Client { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace TravisComms.Data.Repository.Extensions
             services.AddScoped<IIdentityRepository, IdentityRepository>();
             services.AddScoped<IAccountHolderRepository, AccountHolderRepository>();
             services.AddScoped<IAccountHolderRoleRepository, AccountHolderRoleRepository>();
+            services.AddScoped<ISubscriptionTypeRepository, SubscriptionTypeRepository>();
         }
     }
 }

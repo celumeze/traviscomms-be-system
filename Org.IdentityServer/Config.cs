@@ -3,8 +3,10 @@
 
 
 using IdentityServer4;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Org.IdentityServer
 {
@@ -51,6 +53,5 @@ namespace Org.IdentityServer
                     }
                 }
             };
-        
     }
 }

@@ -10,5 +10,8 @@ namespace TravisComms.Api.Dto
     {
         public Guid SubscriptionTypeId { get; set; }
         public string Name { get; set; }
+        public decimal Price { get; set; }
+        public int PeriodInDays { get; set; }
+
     }
 }

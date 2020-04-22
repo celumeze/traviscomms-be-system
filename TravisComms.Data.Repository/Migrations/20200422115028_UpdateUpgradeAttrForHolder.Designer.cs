@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravisComms.Data.Repository;
 
 namespace TravisComms.Data.Repository.Migrations
 {
     [DbContext(typeof(TravisCommsSqlDbContext))]
-    partial class TravisCommsSqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200422115028_UpdateUpgradeAttrForHolder")]
+    partial class UpdateUpgradeAttrForHolder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -488,7 +490,7 @@ namespace TravisComms.Data.Repository.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("AccountHolderRoleId")
+                    b.Property<Guid>("ClientRoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -530,7 +532,7 @@ namespace TravisComms.Data.Repository.Migrations
                         new
                         {
                             Id = "833583c3-1d58-4b95-baad-05b35acdd6a3",
-                            AccountHolderRoleId = new Guid("cb0a792b-bf55-46b5-8795-10c43006be92"),
+                            ClientRoleId = new Guid("cb0a792b-bf55-46b5-8795-10c43006be92"),
                             ConcurrencyStamp = "ef51e739-98e5-4455-9ae0-061ebfdda460",
                             CreatedBy = "TravisComms\\System",
                             DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
@@ -540,7 +542,7 @@ namespace TravisComms.Data.Repository.Migrations
                         new
                         {
                             Id = "ebd48401-7db4-43e5-ae50-211fa5d87ac8",
-                            AccountHolderRoleId = new Guid("37c9973f-9436-4f49-89ef-1e7b2d2398e4"),
+                            ClientRoleId = new Guid("37c9973f-9436-4f49-89ef-1e7b2d2398e4"),
                             ConcurrencyStamp = "be15a41d-2400-45cf-bb50-9c6394d9ef25",
                             CreatedBy = "TravisComms\\System",
                             DateCreated = new DateTime(2020, 4, 17, 18, 15, 0, 0, DateTimeKind.Unspecified),
@@ -557,7 +559,7 @@ namespace TravisComms.Data.Repository.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("AccountHolderId")
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
