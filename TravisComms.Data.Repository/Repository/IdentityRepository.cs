@@ -18,16 +18,14 @@ namespace TravisComms.Data.Repository.Repository
             _userManager = userManager;
         }
 
-        public async Task<bool> CreateNewUser(MainUser newMainUser, string password)
+        public async Task<bool> CreateNewUser(MainUser newMainUser, string password, Guid accountHolderId)
         {
-            var result = await _userManager.CreateAsync(newMainUser, password);
-            return result.Succeeded;
-        }
-
-        public async Task<bool> CreateNewUserRole(MainUser newUser)
-        {
-            var result = await _userManager.AddToRoleAsync(newUser, Enum.GetName(typeof(RoleType), RoleType.AdminRoleType));
-            return result.Succeeded;
+            newMainUser.AccountHolderId = accountHolderId;
+            var userResult = await _userManager.CreateAsync(newMainUser, password);
+            var roleResult = await _userManager.AddToRoleAsync(newMainUser, Enum.GetName(typeof(RoleType), RoleType.AdminRoleType)
+                                                                    .Replace(nameof(RoleType), ""));
+           
+            return userResult.Succeeded && roleResult.Succeeded;
         }
 
         public async Task<bool> FindUserByEmailAsync(string email)

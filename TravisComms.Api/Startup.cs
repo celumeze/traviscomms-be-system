@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Http;
+using TravisComms.Data.Repository.Extensions;
 
 namespace TravisComms.Api
 {
@@ -32,24 +33,46 @@ namespace TravisComms.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddControllers();
+
+            CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
+            SQLDbConfig sqlDbConfig = new SQLDbConfig();
+            Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
+            StartupDb.ConfigureApiResourceStore(services, cosmosDbConfig, sqlDbConfig);
+
+            //enable Cross Origin Site Requests
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllRequests", builder =>
+                {
+                    builder.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+                    //.SetIsOriginAllowed(origin => origin == "http://localhost:8100");
+                    //.AllowCredentials();
+                });
+            });
+
+            //swagger documentation for Opern API specification document
             services.AddSwaggerGen(setupAction =>
             {
                 setupAction.SwaggerDoc("TravisCommsOpenAPISpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
                     Title = "TravisComms API",
                     Version = "1",
-                    Contact = new Microsoft.OpenApi.Models.OpenApiContact() { Name = "Charles Elumeze", Email = "charleelumeze@gmail.com" }
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact() { Name = "Charles Elumeze", Email = "charleselumeze@gmail.com" }
                 });
             });
-                   
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
+                               
+            
             //adds authorize filter to all endpoints
             services.AddMvc(options =>
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +84,7 @@ namespace TravisComms.Api
             }
             else
             {
+                //add exception midlleware to the pipeline
                 app.UseExceptionHandler(appBuilder =>
                 {
                     appBuilder.Run(async context =>
@@ -82,6 +106,7 @@ namespace TravisComms.Api
             });
 
             app.UseRouting();
+            app.UseCors("AllRequests");
             app.UseAuthentication();
             app.UseAuthorization();
 

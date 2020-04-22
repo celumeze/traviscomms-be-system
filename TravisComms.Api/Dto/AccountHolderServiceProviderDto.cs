@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TravisComms.Api.Dto
 {
-    public class ClientServiceProviderDto
+    public class AccountHolderServiceProviderDto
     {
-        public Guid ClientServiceProviderId { get; set; }
+        public Guid AccountHolderServiceProviderId { get; set; }
         public string AuthToken { get; set; }
         public string AccountSid { get; set; }
         public string PhoneNumber { get; set; }

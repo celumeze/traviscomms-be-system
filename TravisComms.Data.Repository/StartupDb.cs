@@ -48,5 +48,14 @@ namespace TravisComms.Data.Repository
                                  builder.UseSqlServer(sqlConnection.ConnectionString, options => options.MigrationsAssembly(migrationsAssembly));
                              });                                                   
         }
+
+        public static void ConfigureApiResourceStore(IServiceCollection serviceCollection, CosmosDbConfig cosmosDbConfig, SQLDbConfig sqlConnection)
+        {
+            serviceCollection.AddDbContext<TravisCommsSqlDbContext>(options =>
+                 options.UseSqlServer(sqlConnection.ConnectionString));
+            serviceCollection.AddIdentityCore<MainUser>(options => { });
+            serviceCollection.AddScoped<IUserStore<MainUser>, UserStore<MainUser, MainRole, TravisCommsSqlDbContext>>();
+            serviceCollection.AddRepositories();
+        }
     }
 }
