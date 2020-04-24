@@ -53,11 +53,11 @@ namespace TravisComms.Api.Controllers
                                                accountHolderCreated.AccountHolderId);
                     if (isUserCreated)
                     {                      
-                          return Ok("Verify email to complete registration");
+                          return Ok(new ResponseMessageDto { SuccessMessage = "Please verify your email address to complete registration" });
                     }
                 }                               
             }           
-            return BadRequest("Unable to register at this time");
+            return BadRequest(new ResponseMessageDto { ErrorMessage = "Unable to register at this time. Please try again" });
         }
     }
 }
