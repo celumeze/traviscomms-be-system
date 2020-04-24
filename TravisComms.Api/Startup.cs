@@ -18,6 +18,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Http;
 using TravisComms.Data.Repository.Extensions;
+using System.Text;
+using TravisComms.Api.Dto;
+using TravisComms.Api.Middleware;
 
 namespace TravisComms.Api
 {
@@ -34,7 +37,26 @@ namespace TravisComms.Api
         public void ConfigureServices(IServiceCollection services)
         {
             
-            services.AddControllers();
+            services.AddControllers()
+                    .ConfigureApiBehaviorOptions(options => 
+                    {
+                        options.InvalidModelStateResponseFactory = context =>
+                        {
+                            StringBuilder errorBuilder = new StringBuilder();
+                            context.ModelState.ToList().ForEach(modelSate =>
+                            {
+                                foreach (var error in modelSate.Value.Errors)
+                                {
+                                    errorBuilder.AppendLine(error.ErrorMessage);
+                                }
+                            });
+                            ResponseMessageDto responseMessage = new ResponseMessageDto 
+                            { 
+                                ErrorMessage = errorBuilder.ToString() 
+                            };
+                            return new UnprocessableEntityObjectResult(responseMessage);
+                        };
+                    });
 
             CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
             SQLDbConfig sqlDbConfig = new SQLDbConfig();
@@ -80,19 +102,12 @@ namespace TravisComms.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();              
             }
             else
             {
-                //add exception midlleware to the pipeline
-                app.UseExceptionHandler(appBuilder =>
-                {
-                    appBuilder.Run(async context =>
-                    {
-                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                        await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
-                    });
-                });
+                //add exception custom midlleware to the pipeline
+                app.UseGlobalException();
             }
             
             app.UseHttpsRedirection();

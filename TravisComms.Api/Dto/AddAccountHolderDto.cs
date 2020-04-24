@@ -19,9 +19,7 @@ namespace TravisComms.Api.Dto
         [Required]
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public bool Active { get; set; }
-        public bool IsUpgradedToPaid { get; set; }
-        public DateTime? DateOfUpgrade { get; set; }
+        public bool Active { get; set; } = true;
         public Guid SubscriptionTypeId { get; set; }
         public Guid AccountHolderRoleId { get; set; }
     }
