@@ -16,13 +16,12 @@ namespace TravisComms.Data.Repository
         public static IIdentityServerBuilder ConfigureServices(IServiceCollection serviceCollection, CosmosDbConfig cosmosDbConfig, SQLDbConfig sqlConnection)
         {
          
-            //serviceCollection.AddDbContext<TravisCommsNoSqlDbContext>(opt => opt.UseCosmos(cosmosDbConfig.ServiceEndpoint, cosmosDbConfig.AuthKey, cosmosDbConfig.DatabaseName));
+            
             // AspNet Identity Core
             serviceCollection.AddIdentity<MainUser, MainRole>()
                              .AddEntityFrameworkStores<TravisCommsSqlDbContext>()
-                             .AddDefaultTokenProviders()
                              .AddUserStore<UserStore<MainUser, MainRole, TravisCommsSqlDbContext>>();
-            serviceCollection.AddIdentityCore<MainUser>(options => { });
+            serviceCollection.AddIdentityCore<MainUser>(options => {  });
             
             var migrationsAssembly = typeof(StartupDb).GetTypeInfo().Assembly.GetName().Name;
 
@@ -53,7 +52,9 @@ namespace TravisComms.Data.Repository
         {
             serviceCollection.AddDbContext<TravisCommsSqlDbContext>(options =>
                  options.UseSqlServer(sqlConnection.ConnectionString));
-            serviceCollection.AddIdentityCore<MainUser>(options => { });
+            serviceCollection.AddIdentityCore<MainUser>(options => { })
+                              .AddDefaultTokenProviders();
+            serviceCollection.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(3)); //sets the expiry period for tokens
             serviceCollection.AddScoped<IUserStore<MainUser>, UserStore<MainUser, MainRole, TravisCommsSqlDbContext>>();
             serviceCollection.AddRepositories();
         }

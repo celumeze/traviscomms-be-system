@@ -1,26 +1,20 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using TravisComms.Api.Profiles;
 using TravisComms.Data.Repository;
 using TravisComms.Data.Repository.Bindings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Http;
-using TravisComms.Data.Repository.Extensions;
 using System.Text;
 using TravisComms.Api.Dto;
 using TravisComms.Api.Middleware;
+using TravisComms.Sender.Module;
 
 namespace TravisComms.Api
 {
@@ -33,10 +27,10 @@ namespace TravisComms.Api
 
         public IConfiguration Configuration { get; }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            
+        {         
             services.AddControllers()
                     .ConfigureApiBehaviorOptions(options => 
                     {
@@ -62,6 +56,10 @@ namespace TravisComms.Api
             SQLDbConfig sqlDbConfig = new SQLDbConfig();
             Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
             StartupDb.ConfigureApiResourceStore(services, cosmosDbConfig, sqlDbConfig);
+
+            //Service Bus                        
+            StartupMessenger.ConfigureServiceBus(services, Configuration);
+            
 
             //enable Cross Origin Site Requests
             services.AddCors(options =>

@@ -9,6 +9,7 @@ namespace TravisComms.Data.Repository.Interfaces
     public interface IIdentityRepository
     {
         Task<bool> FindUserByEmailAsync(string email);
-        Task<bool> CreateNewUser(MainUser newMainUser, string password, Guid accountHolderId);
+        Task<MainUser> CreateNewUserAsync(MainUser newMainUser, string password, Guid accountHolderId);
+        Task<string> GenerateEmailConfirmationCodeAsync(MainUser user);
     }
 }
