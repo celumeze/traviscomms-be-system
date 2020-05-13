@@ -15,6 +15,7 @@ using System.Text;
 using TravisComms.Api.Dto;
 using TravisComms.Api.Middleware;
 using TravisComms.Sender.Module;
+using IdentityServer4.AccessTokenValidation;
 
 namespace TravisComms.Api
 {
@@ -50,6 +51,15 @@ namespace TravisComms.Api
                             };
                             return new UnprocessableEntityObjectResult(responseMessage);
                         };
+                    });
+
+            ///setting scope and authentication for IDP
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = "https://localhost:5000";
+                        options.ApiName = "traviscomms-api";
+                        options.RequireHttpsMetadata = true;
                     });
 
             CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();

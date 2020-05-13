@@ -28,6 +28,8 @@ namespace Org.IdentityServer.Helpers
                         context.Clients.Add(cfg.ToEntity());
                     }
                 });
+                //var client = context.Clients.FirstOrDefault();
+                //context.Clients.Remove(client);
                 context.SaveChanges();
             }
         }
