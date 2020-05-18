@@ -50,7 +50,7 @@ namespace TravisComms.Data.Repository
 
         public static void ConfigureApiResourceStore(IServiceCollection serviceCollection, CosmosDbConfig cosmosDbConfig, SQLDbConfig sqlConnection)
         {
-            serviceCollection.AddDbContext<TravisCommsSqlDbContext>(options =>
+            serviceCollection.AddDbContextPool<TravisCommsSqlDbContext>(options =>
                  options.UseSqlServer(sqlConnection.ConnectionString));
             serviceCollection.AddIdentityCore<MainUser>(options => { })
                               .AddDefaultTokenProviders();
