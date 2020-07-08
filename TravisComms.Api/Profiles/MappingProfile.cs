@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
+using System;
+using System.Linq;
 using TravisComms.Api.Dto;
 using TravisComms.Data.Entities.Models;
 using TravisComms.Data.Repository.IdentityModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TravisComms.Api.Profiles
 {
@@ -22,6 +20,8 @@ namespace TravisComms.Api.Profiles
             CreateMap<SubscriptionType, SubscriptionTypeDto>();
             CreateMap<AccountHolderRole, AccountHolderRoleDto>();
             CreateMap<AccountHolderRoleDto, AccountHolderRole>();
+            CreateMap<AddContactDto, Contact>();
+            CreateMap<Contact, AddContactDto>();
         }
     }
 }

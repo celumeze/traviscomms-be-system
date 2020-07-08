@@ -29,8 +29,9 @@ namespace Org.IdentityServer.Helpers
                     }
                 });
                 //var client = context.Clients.FirstOrDefault();
-                //context.Clients.Remove(client);
-                context.SaveChanges();
+                //foreach(var client in context.Clients)
+                 // context.Clients.Remove(client);
+               // context.SaveChanges();
             }
         }
 
@@ -54,6 +55,9 @@ namespace Org.IdentityServer.Helpers
                     }
                 });
             }
+            //foreach (var identity in context.IdentityResources)
+               // context.IdentityResources.Remove(identity);
+            //context.SaveChanges();
         }
 
         public static void InitializeApiResources(ConfigurationDbContext context)
@@ -76,6 +80,9 @@ namespace Org.IdentityServer.Helpers
                     }
                 });
             }
+            //foreach (var apiRes in context.ApiResources)
+               // context.ApiResources.Remove(apiRes);
+            //context.SaveChanges();
         }
     }
 }

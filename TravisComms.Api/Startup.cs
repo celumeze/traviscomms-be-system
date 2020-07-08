@@ -65,8 +65,9 @@ namespace TravisComms.Api
             CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
             SQLDbConfig sqlDbConfig = new SQLDbConfig();
             Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
-            StartupDb.ConfigureApiResourceStore(services, cosmosDbConfig, sqlDbConfig);
-
+            Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
+            StartupDb.ConfigureApiResourceStore(services, sqlDbConfig);
+            StartupDb.ConfigureApiCosmosDb(cosmosDbConfig);
             //Service Bus                        
             StartupMessenger.ConfigureServiceBus(services, Configuration);
             
