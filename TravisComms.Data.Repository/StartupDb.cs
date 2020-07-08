@@ -8,12 +8,17 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Reflection;
+using Microsoft.Azure.Cosmos;
+using Microsoft.Extensions.Configuration;
+using TravisComms.Data.Repository.Helpers;
+using System.Threading.Tasks;
 
 namespace TravisComms.Data.Repository
 {
     public static class StartupDb
     {
-        public static IIdentityServerBuilder ConfigureServices(IServiceCollection serviceCollection, CosmosDbConfig cosmosDbConfig, SQLDbConfig sqlConnection)
+        internal static CosmosClient ApiCosmosClient { get; private set; }
+        public static IIdentityServerBuilder ConfigureServices(IServiceCollection serviceCollection, SQLDbConfig sqlConnection)
         {
          
             
@@ -45,10 +50,10 @@ namespace TravisComms.Data.Repository
                              {
                                  storeOptions.ConfigureDbContext = builder =>
                                  builder.UseSqlServer(sqlConnection.ConnectionString, options => options.MigrationsAssembly(migrationsAssembly));
-                             });                                                   
+                             });
         }
 
-        public static void ConfigureApiResourceStore(IServiceCollection serviceCollection, CosmosDbConfig cosmosDbConfig, SQLDbConfig sqlConnection)
+        public static void ConfigureApiResourceStore(IServiceCollection serviceCollection, SQLDbConfig sqlConnection)
         {
             serviceCollection.AddDbContextPool<TravisCommsSqlDbContext>(options =>
                  options.UseSqlServer(sqlConnection.ConnectionString));
@@ -57,6 +62,14 @@ namespace TravisComms.Data.Repository
             serviceCollection.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(3)); //sets the expiry period for tokens
             serviceCollection.AddScoped<IUserStore<MainUser>, UserStore<MainUser, MainRole, TravisCommsSqlDbContext>>();
             serviceCollection.AddRepositories();
+        }
+
+        public static CosmosClient ConfigureApiCosmosDb(CosmosDbConfig cosmosDbConfig)
+        {
+            ApiCosmosClient = new CosmosClient(cosmosDbConfig.ServiceEndpoint, cosmosDbConfig.AuthKey);
+            var database = ApiCosmosClient.CreateDatabaseIfNotExistsAsync(StoreConstants.ContactDbId).GetAwaiter().GetResult();
+            database.Database.CreateContainerIfNotExistsAsync(StoreConstants.ContactContainerId, "/accountHolderId").Wait();
+            return ApiCosmosClient;
         }
     }
 }

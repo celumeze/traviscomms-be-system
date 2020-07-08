@@ -8,6 +8,5 @@ namespace TravisComms.Data.Repository.Bindings
     {
         public string ServiceEndpoint { get; set; }
         public string AuthKey { get; set; }
-        public string DatabaseName { get; set; }
     }
 }

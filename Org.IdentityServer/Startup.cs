@@ -36,8 +36,8 @@ namespace Org.IdentityServer
 
             CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
             SQLDbConfig sqlDbConfig = new SQLDbConfig();
-            Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
-            var builder = StartupDb.ConfigureServices(services, cosmosDbConfig, sqlDbConfig);
+            Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);            
+            var builder = StartupDb.ConfigureServices(services, sqlDbConfig);           
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
