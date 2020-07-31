@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravisComms.Email.Service",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravisComms.Messaging", "TravisComms.Service.Entities\TravisComms.Messaging.csproj", "{908F720C-D3C2-491C-8819-7A5EAB10DA31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravisComms.Api.IntegrationTests", "TravisComms.Api.IntegrationTests\TravisComms.Api.IntegrationTests.csproj", "{34ECC04E-F66E-4451-8100-F37A4797EA94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravisComms.Api.IntegrationTests", "TravisComms.Api.IntegrationTests\TravisComms.Api.IntegrationTests.csproj", "{34ECC04E-F66E-4451-8100-F37A4797EA94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

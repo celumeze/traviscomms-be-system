@@ -11,14 +11,15 @@ namespace TravisComms.Data.Repository.Repository
     public class ContactRepository : IContactRepository
     {
         public async Task<Contact> AddContactDetails(Contact contactDetails)
-        {
-            await CosmosHelper.CreateStoredPocedure(StoreConstants.InsertStoredProc, StoreConstants.ContactDbId, StoreConstants.ContactContainerId);
+        {            
             return await CosmosHelper.Execute_spInsertContactDetails(StoreConstants.InsertStoredProc, StoreConstants.ContactDbId, StoreConstants.ContactContainerId, contactDetails);
         }
 
-        public Task<IEnumerable<Contact>> GetContactDetailsAsync()
+        public async Task<IEnumerable<dynamic>> GetContactDetailsAsync(string accountHolderId)
         {
-            throw new NotImplementedException();
+            var sql = $"SELECT * FROM c WHERE c.accountHolderId = '{accountHolderId}'";
+            var documents = await CosmosHelper.QueryDocuments(sql, StoreConstants.ContactDbId, StoreConstants.ContactContainerId);
+            return documents;
         }
     }
 }

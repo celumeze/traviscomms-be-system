@@ -12,6 +12,7 @@ using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;
 using TravisComms.Data.Repository.Helpers;
 using System.Threading.Tasks;
+using TravisComms.Data.Repository.Repository;
 
 namespace TravisComms.Data.Repository
 {
@@ -41,6 +42,7 @@ namespace TravisComms.Data.Repository
             //IdentityServer4
             return serviceCollection.AddIdentityServer()
                              .AddAspNetIdentity<MainUser>()
+                             .AddProfileService<IdentityProfileService>()
                              .AddConfigurationStore(storeOptions =>
                              {
                                  storeOptions.ConfigureDbContext = builder =>

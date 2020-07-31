@@ -9,46 +9,41 @@ using TravisComms.Data.Repository.Interfaces;
 
 namespace TravisComms.Data.Repository.Repository
 {
-    public class AccountHolderRepository : RepositoryBase, IAccountHolderRepository
+    public class AccountHolderRepository : GenericRepository<AccountHolder>, IAccountHolderRepository
     {
-        private readonly TravisCommsSqlDbContext _TravisCommsSqlDbContext;
-        public AccountHolderRepository(TravisCommsSqlDbContext TravisCommsSqlDbContext) : base(TravisCommsSqlDbContext)
+        public AccountHolderRepository(TravisCommsSqlDbContext travisCommsSqlDbContext) : base(travisCommsSqlDbContext)
         {
-            _TravisCommsSqlDbContext = TravisCommsSqlDbContext;
-        }
 
+        }
         public AccountHolder AddAccountHolder(AccountHolder accountHolder)
         {
             accountHolder.AccountHolderId = Guid.NewGuid();
-            _TravisCommsSqlDbContext.Entry(accountHolder).State = EntityState.Added;
-            return accountHolder;
+            return base.Add(accountHolder);
         }
 
         public async Task<AccountHolder> GetAccountHolderByIdAsync(Guid accountHolderId)
         {
-            return await _TravisCommsSqlDbContext.AccountHolders?.FirstOrDefaultAsync(a => a.AccountHolderId == accountHolderId);
+            return await base.GetAsync(accountHolderId);
         }
 
         public async Task<IEnumerable<AccountHolder>> GetAccountHoldersAsync()
         {
-            return await _TravisCommsSqlDbContext.AccountHolders?.ToListAsync();
+            return await base.AllAsync();
         }
 
         public async Task<IEnumerable<AccountHolder>> GetAccountHoldersBySubscriptionTypeAsync(Guid subscriptionTypeId)
         {
-            return await _TravisCommsSqlDbContext.AccountHolders?.Where(c => c.SubscriptionTypeId == subscriptionTypeId).ToListAsync();
+            return await base.FindAllAsync(a => a.SubscriptionTypeId == subscriptionTypeId);
         }
 
         public AccountHolder RemoveAccountHolder(AccountHolder accountHolder)
         {
-            _TravisCommsSqlDbContext.Entry(accountHolder).State = EntityState.Deleted;
-            return accountHolder;
+            return base.Delete(accountHolder);
         }
 
         public AccountHolder UpdateAccountHolder(AccountHolder accountHolder)
         {
-            _TravisCommsSqlDbContext.Entry(accountHolder).State = EntityState.Modified;
-            return accountHolder;
+            return base.Update(accountHolder);
         }
     }
 }

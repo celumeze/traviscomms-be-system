@@ -5,21 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravisComms.Data.Entities.Enums;
+using TravisComms.Data.Entities.Models;
 using TravisComms.Data.Repository.Interfaces;
 
 namespace TravisComms.Data.Repository.Repository
 {
-    public class AccountHolderRoleRepository : RepositoryBase, IAccountHolderRoleRepository
+    public class AccountHolderRoleRepository : GenericRepository<AccountHolderRole>, IAccountHolderRoleRepository
     {
-        private readonly TravisCommsSqlDbContext _TravisCommsSqlDbContext;
-        public AccountHolderRoleRepository(TravisCommsSqlDbContext TravisCommsSqlDbContext) : base(TravisCommsSqlDbContext)
+        public AccountHolderRoleRepository(TravisCommsSqlDbContext travisCommsSqlDbContext) : base(travisCommsSqlDbContext)
         {
-            _TravisCommsSqlDbContext = TravisCommsSqlDbContext;
+
         }
 
         public async Task<Guid> GetAccountHolderRoleIdByRoleTypeAsync(RoleType roleType)
         {
-            var accountHolderRole = await _TravisCommsSqlDbContext.AccountHoldersRole?.Where(a => a.RoleType == roleType).FirstOrDefaultAsync();
+            var accountHolderRole = await base.FindAsync(a => a.RoleType == roleType);
             return accountHolderRole != null ? accountHolderRole.AccountHolderRoleId : Guid.Empty;
         }
     }
