@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TravisComms.Data.Repository.UoW;
+using Microsoft.AspNetCore.Identity;
+using TravisComms.Data.Repository.IdentityModels;
 
 namespace TravisComms.Data.Repository.Extensions
 {
@@ -16,6 +19,7 @@ namespace TravisComms.Data.Repository.Extensions
             services.AddScoped<IAccountHolderRoleRepository, AccountHolderRoleRepository>();
             services.AddScoped<ISubscriptionTypeRepository, SubscriptionTypeRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IRegistrationUoW, RegistrationUoW>();
         }
     }
 }

@@ -22,10 +22,10 @@ namespace TravisComms.Data.Repository.Repository
         {
             newMainUser.AccountHolderId = accountHolderId;
             var userResult = await _userManager.CreateAsync(newMainUser, password);
+            
             var roleResult = await _userManager.AddToRoleAsync(newMainUser, Enum.GetName(typeof(RoleType), RoleType.AdminRoleType)
-                                                                    .Replace(nameof(RoleType), ""));
-           
-            if(userResult.Succeeded && roleResult.Succeeded)
+                                                                   .Replace(nameof(RoleType), ""));
+            if (userResult.Succeeded && roleResult.Succeeded)
             {
                 return newMainUser;
             }
@@ -40,7 +40,7 @@ namespace TravisComms.Data.Repository.Repository
         public async Task<string> GenerateEmailConfirmationCodeAsync(MainUser user)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            return code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));            
+            return WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));            
         }
     }
 }

@@ -11,7 +11,8 @@ namespace TravisComms.Api.Dto
         public string FirstName { get; set; }
         public string LastName { get; set; }
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "Contact Number can only contain numbers")]
+        [MaxLength(20)]
+        [Range(0, long.MaxValue, ErrorMessage = "Contact Number can only contain numbers")]
         public string ContactNumber { get; set; }
         public Guid AccountHolderId { get; set; }
     }

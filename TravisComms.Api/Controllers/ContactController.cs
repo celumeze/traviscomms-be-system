@@ -13,7 +13,7 @@ using TravisComms.Data.Repository.Interfaces;
 
 namespace TravisComms.Api.Controllers
 {
-    [Route("api/contact")]
+    
     [ApiController]
     public class ContactController : ControllerBase
     {
@@ -28,15 +28,32 @@ namespace TravisComms.Api.Controllers
             _contactRepository = contactRepository;
         }
 
+        [HttpGet]
+        [Route("api/contacts")]
+        [ResponseCache(Duration = 120)]
+        public async Task<IActionResult> GetContacts()
+        {
+            var accountHolderId = User.Claims.FirstOrDefault(c => c.Type == "AccountHolderId")?.Value;
+            if(!string.IsNullOrEmpty(accountHolderId))
+            {
+                var contacts = await _contactRepository.GetContactDetailsAsync(accountHolderId);
+                return Ok(contacts);
+            }            
+            return BadRequest();
+        }
+
         [HttpPost]
-        [AllowAnonymous]
+        [Route("api/contact")]
         public async Task<IActionResult> AddContact([FromBody]AddContactDto newContact)
         {
             if(newContact != null)
             {
+                var accountHolderIdClaim = User.Claims.FirstOrDefault(c => c.Type == "AccountHolderId")?.Value;
+                newContact.AccountHolderId = !string.IsNullOrEmpty(accountHolderIdClaim) ? Guid.Parse(accountHolderIdClaim) : Guid.Empty;
                 var newAddedContact = await _contactRepository.AddContactDetails(_mapper.Map<Contact>(newContact));
                 if(newAddedContact != null)
                 {
+                    newAddedContact.AccountHolderId = Guid.Empty;
                     return Ok(newAddedContact);
                 }
             }

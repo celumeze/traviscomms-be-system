@@ -8,23 +8,22 @@ using System.Threading.Tasks;
 
 namespace TravisComms.Data.Repository.Repository
 {
-    public class SubscriptionTypeRepository : RepositoryBase, ISubscriptionTypeRepository
+    public class SubscriptionTypeRepository : GenericRepository<SubscriptionType>, ISubscriptionTypeRepository
     {
-        private readonly TravisCommsSqlDbContext _TravisCommsSqlDbContext;
-
-        public SubscriptionTypeRepository(TravisCommsSqlDbContext TravisCommsSqlDbContext) : base(TravisCommsSqlDbContext)
+        public SubscriptionTypeRepository(TravisCommsSqlDbContext travisCommsSqlDbContext) : base(travisCommsSqlDbContext)
         {
-            _TravisCommsSqlDbContext = TravisCommsSqlDbContext;
+
         }
+
         public async Task<Guid> GetSubscriptionIdByNameAsync(string name)
         {
-            var result = await _TravisCommsSqlDbContext.SubscriptionTypes?.FirstOrDefaultAsync(s => s.Name == name);
+            var result = await base.FindAsync(s => s.Name == name);
             return result != null ? result.SubscriptionTypeId : Guid.Empty;
         }
 
         public async Task<IEnumerable<SubscriptionType>> GetSubscriptionTypesAsync()
         {
-            return await _TravisCommsSqlDbContext.SubscriptionTypes?.ToListAsync();
+            return await base.AllAsync();
         }
     }
 }

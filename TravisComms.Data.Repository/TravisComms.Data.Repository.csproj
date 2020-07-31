@@ -53,4 +53,13 @@
     <ProjectReference Include="..\TravisComms.Data.Entities\TravisComms.Data.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="CosmosServer\spBulkInsert.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CosmosServer\spInsert.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

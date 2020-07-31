@@ -7,6 +7,7 @@ using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Org.IdentityServer
 {
@@ -17,8 +18,6 @@ namespace Org.IdentityServer
             { 
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource("subscriptiontype", "the account holder subscription type", new List<string> { "subscriptiontype" } ),
-                new IdentityResource("accountholderrole", "the account holder role", new List<string> { "accountholderrole" } ),
             };
 
         public static IEnumerable<ApiResource> Apis =>
@@ -26,13 +25,13 @@ namespace Org.IdentityServer
             { 
               new ApiResource("traviscomms-api", "TravisComms API")
             };
-        
+
         public static IEnumerable<Client> Clients =>
-            new Client[] 
-            { 
+            new Client[]
+            {
                 new Client
                 {
-                     
+
                     AccessTokenLifetime = 120,
                     ClientId = "traviscomms-desktop",
                     ClientName = "TravisComms",
@@ -48,14 +47,12 @@ namespace Org.IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "subscriptiontype",
-                        "accountholderrole",
                         "traviscomms-api"
                     }
                 },
                 new Client
                 {
-                     
+
                     AccessTokenLifetime = 120,
                     ClientId = "traviscomms-webui",
                     ClientName = "TravisComms",
@@ -71,10 +68,9 @@ namespace Org.IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "subscriptiontype",
-                        "accountholderrole",
                         "traviscomms-api"
                     }
+                   
                 }
             };
     }

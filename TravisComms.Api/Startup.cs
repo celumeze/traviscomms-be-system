@@ -31,7 +31,9 @@ namespace TravisComms.Api
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {         
+        {           
+            services.AddResponseCaching();
+
             services.AddControllers()
                     .ConfigureApiBehaviorOptions(options => 
                     {
@@ -53,11 +55,11 @@ namespace TravisComms.Api
                         };
                     });
 
-            ///setting scope and authentication for IDP
+            ///setting scope and authentication for IDP            
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                     .AddIdentityServerAuthentication(options =>
                     {
-                        options.Authority = "https://localhost:5000";
+                        options.Authority = "https://localhost:5001";
                         options.ApiName = "traviscomms-api";
                         options.RequireHttpsMetadata = true;
                     });
@@ -102,7 +104,7 @@ namespace TravisComms.Api
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-            });
+            }).AddNewtonsoftJson();
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
         }
 
@@ -120,7 +122,7 @@ namespace TravisComms.Api
             }
             
             app.UseHttpsRedirection();
-
+            app.UseResponseCaching();
             app.UseSwagger();
 
             app.UseSwaggerUI(setupAction => 
@@ -129,6 +131,8 @@ namespace TravisComms.Api
                 setupAction.RoutePrefix = string.Empty;
             });
 
+           
+            
             app.UseRouting();
             app.UseCors("AllRequests");
             app.UseAuthentication();

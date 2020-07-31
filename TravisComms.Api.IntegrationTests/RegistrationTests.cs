@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,26 +21,13 @@ using Xunit;
 
 namespace TravisComms.Api.IntegrationTests
 {
-    public class RegistrationTests : IClassFixture<CustomWebApiFactory<TravisComms.Api.Startup>>
+    public class RegistrationTests : IntegrationBase
     {
         private readonly HttpClient _httpClient;
-        private readonly CustomWebApiFactory<TravisComms.Api.Startup> _factory;
 
-        public RegistrationTests(CustomWebApiFactory<TravisComms.Api.Startup> factory)
+        public RegistrationTests(CustomWebApiFactory<Startup> factory) : base(factory)
         {
-            _factory = factory;
-            var config = new ConfigurationBuilder()
-                            .AddUserSecrets<Startup>()
-                            .Build();
-
-            var hostBuilder = new WebHostBuilder()
-                                  .UseConfiguration(config)
-                                  .UseStartup<Startup>();
-            var testServer = new TestServer(hostBuilder);
-             
-            _httpClient = _factory.CreateClient();
-            
-            
+            _httpClient = GetFactory().CreateClient();
         }
 
         [Theory]
@@ -49,7 +37,7 @@ namespace TravisComms.Api.IntegrationTests
             //Arrange
             var addAccountHolderDto = new AddAccountHolderDto
             {
-                EmailAddress = "joebloggs@gmail.com",
+                EmailAddress = "joeyuibloggs45678ty2@gmail.com",
                 Password = "P@ssw0rd1",
                 ConfirmPassword = "P@ssw0rd1",
                 Company = "jsjds",
@@ -67,7 +55,6 @@ namespace TravisComms.Api.IntegrationTests
             var response = await _httpClient.SendAsync(request);
 
             //Assert
-            response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
