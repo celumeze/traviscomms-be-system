@@ -57,14 +57,14 @@ namespace TravisComms.Api.Controllers
                      var callbackUrl = ControllerHelper.GenerateVerifyEmailLink(Url, ControllerContext, 
                                                             userCreated.Id, emailVerificationCode);
                     //send message
-                    var message = new VerifyEmailCommand
-                    {
-                        CorrelationID = Guid.NewGuid(),
-                        EmailAddress = addAccountHolderDto.EmailAddress,
-                        FirstName = addAccountHolderDto.FirstName,
-                        CallbackUrl = callbackUrl
-                    };
-                    await _emailMessenger.SendVerifyEmailCommand(message, _serviceBusConfig.AzureServiceBusConnectionString, _serviceBusConfig.EmailServiceConfig.QueueName);
+                    //var message = new VerifyEmailCommand
+                    //{
+                    //    CorrelationID = Guid.NewGuid(),
+                    //    EmailAddress = addAccountHolderDto.EmailAddress,
+                    //    FirstName = addAccountHolderDto.FirstName,
+                    //    CallbackUrl = callbackUrl
+                    //};
+                    //await _emailMessenger.SendVerifyEmailCommand(message, _serviceBusConfig.AzureServiceBusConnectionString, _serviceBusConfig.EmailServiceConfig.QueueName);
                     return Ok(new ResponseMessageDto { SuccessMessage = "Please verify your email address to complete registration" });
                 }
                                                

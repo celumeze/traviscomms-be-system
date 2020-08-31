@@ -22,6 +22,8 @@ namespace TravisComms.Api.Profiles
             CreateMap<AccountHolderRoleDto, AccountHolderRole>();
             CreateMap<AddContactDto, Contact>();
             CreateMap<Contact, AddContactDto>();
+            CreateMap<Contact, ContactDto>();
+            CreateMap<ContactDto, Contact>();
         }
     }
 }
