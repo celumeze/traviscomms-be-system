@@ -69,7 +69,7 @@ namespace TravisComms.Data.Repository
         public static CosmosClient ConfigureApiCosmosDb(CosmosDbConfig cosmosDbConfig)
         {
             ApiCosmosClient = new CosmosClient(cosmosDbConfig.ServiceEndpoint, cosmosDbConfig.AuthKey);
-            var database = ApiCosmosClient.CreateDatabaseIfNotExistsAsync(StoreConstants.ContactDbId).GetAwaiter().GetResult();
+            var database = ApiCosmosClient.CreateDatabaseIfNotExistsAsync(StoreConstants.TravisCosmosDb).GetAwaiter().GetResult();
             database.Database.CreateContainerIfNotExistsAsync(StoreConstants.ContactContainerId, "/accountHolderId").Wait();
             return ApiCosmosClient;
         }

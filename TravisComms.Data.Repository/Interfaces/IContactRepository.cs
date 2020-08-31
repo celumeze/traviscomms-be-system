@@ -8,8 +8,9 @@ namespace TravisComms.Data.Repository.Interfaces
 {
     public interface IContactRepository
     {
-        Task<IEnumerable<dynamic>> GetContactDetailsAsync(string accountHolderId);
+        Task<IEnumerable<Contact>> GetContactDetailsAsync(string accountHolderId);
         Task<Contact> AddContactDetails(Contact contactDetails);
+        Task<Contact> EditContactDetails(Contact contactDetails);
 
     }
 }

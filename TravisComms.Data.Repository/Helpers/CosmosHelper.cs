@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using TravisComms.Data.Entities.Models;
+using TravisComms.Data.Entities.ServerSide;
 
 namespace TravisComms.Data.Repository.Helpers
 {
@@ -16,13 +17,8 @@ namespace TravisComms.Data.Repository.Helpers
 
             var container = StartupDb.ApiCosmosClient.GetContainer(databaseId, containerId);
             var iterator = container.GetItemQueryIterator<dynamic>(sql);
-            var documents = await iterator.ReadNextAsync();
-            foreach (var contact in documents)
-            {
-                contact.accountHolderId = string.Empty;
-            }
+            var documents = await iterator.ReadNextAsync();           
             return documents;
-
         }
 
         public async static Task<dynamic> QueryDocumentsStateless(string databaseId, string containerId, string sql)
@@ -37,19 +33,30 @@ namespace TravisComms.Data.Repository.Helpers
             } while (!string.IsNullOrEmpty(continuationToken));
         }
 
-        public async static Task<Contact> Execute_spInsertContactDetails(string sprocId, string databaseId, string containerId, Contact newContact)
+        public async static Task<string> Execute_spInsertItem(string databaseId, string containerId, object newObject, PartitionKey partitionKey)
         {
-            await CosmosHelper.CreateStoredPocedure(sprocId, databaseId, containerId);
-            newContact.Id = Guid.NewGuid();
+            await CosmosHelper.CreateStoredPocedure(StoreConstants.InsertStoredProc, databaseId, containerId);
             var container = StartupDb.ApiCosmosClient.GetContainer(databaseId, containerId);
-            var partitionKey = new PartitionKey(newContact.AccountHolderId.ToString());
-            string newContactJson = JsonConvert.SerializeObject(newContact);
-            var result = await container.Scripts.ExecuteStoredProcedureAsync<string>(sprocId, partitionKey, new[] { newContactJson });
+            string newContactJson = JsonConvert.SerializeObject(newObject);
+            var result = await container.Scripts.ExecuteStoredProcedureAsync<string>(StoreConstants.InsertStoredProc, partitionKey, new[] { newContactJson });
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                return JsonConvert.DeserializeObject<Contact>(newContactJson);
+                return newContactJson;
             return null;
         }
 
+        public async static Task<string> Execute_spUpdateItem(string databaseId, string containerId, object updatedItem, PartitionKey partitionKey, CosmosDbItem cosmosDbItem)
+        {
+            await CosmosHelper.CreateStoredPocedure(StoreConstants.UpdateStoredProc, databaseId, containerId);
+            var container = StartupDb.ApiCosmosClient.GetContainer(databaseId, containerId);
+            string doc = JsonConvert.SerializeObject(updatedItem);
+            var result = await container.Scripts.ExecuteStoredProcedureAsync<string>(StoreConstants.UpdateStoredProc, partitionKey, 
+                                                 new[] { containerId, cosmosDbItem.Id, cosmosDbItem.AccountHolderId,  doc});
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                return doc;
+            return null;
+        }
+
+        #region Private Helper Methods
         private async static Task<KeyValuePair<string, dynamic>> QueryFetchNextPage(string continuationToken, string databaseId, string containerId, string sql)
         {
             var container = StartupDb.ApiCosmosClient.GetContainer(databaseId, containerId);
@@ -86,7 +93,7 @@ namespace TravisComms.Data.Repository.Helpers
             {
                 await container.Scripts.CreateStoredProcedureAsync(sprocProps);
             }
-
         }
+        #endregion
     }
 }
