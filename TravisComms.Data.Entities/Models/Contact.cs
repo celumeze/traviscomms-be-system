@@ -8,6 +8,11 @@ namespace TravisComms.Data.Entities.Models
 {
     public class Contact
     {
+        public Contact()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [JsonProperty(PropertyName = "id")]
         public Guid Id { get; set; }
         [JsonProperty(PropertyName = "firstName")]
@@ -37,6 +42,8 @@ namespace TravisComms.Data.Entities.Models
         [JsonProperty(PropertyName = "customAttribute10")]
         public string CustomAttribute10 { get; set; }
         [JsonProperty(PropertyName = "accountHolderId")]
-        public Guid AccountHolderId { get; set; }        
+        public Guid AccountHolderId { get; set; }   
+        public bool IsUploadedFromCsv { get; set; }
+        public bool IsCsvHeaderRow { get; set; }
     }
 }

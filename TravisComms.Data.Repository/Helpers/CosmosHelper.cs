@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Scripts;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,6 +42,17 @@ namespace TravisComms.Data.Repository.Helpers
             var result = await container.Scripts.ExecuteStoredProcedureAsync<string>(StoreConstants.InsertStoredProc, partitionKey, new[] { newContactJson });
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
                 return newContactJson;
+            return null;
+        }
+
+        public async static Task<string> Execute_spBulkInsertItems(string databaseId, string containerId, IEnumerable<dynamic> newObject, PartitionKey partitionKey)
+        {
+            await CosmosHelper.CreateStoredPocedure(StoreConstants.InsertBatchStoredProc, databaseId, containerId);
+            var container = StartupDb.ApiCosmosClient.GetContainer(databaseId, containerId);
+            string newContactsJson = JsonConvert.SerializeObject(newObject);            
+            var result = await container.Scripts.ExecuteStoredProcedureAsync<string>(StoreConstants.InsertBatchStoredProc, partitionKey, new[] { newContactsJson });
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                return newContactsJson;
             return null;
         }
 

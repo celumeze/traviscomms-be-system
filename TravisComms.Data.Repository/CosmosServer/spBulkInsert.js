@@ -1,39 +1,35 @@
-﻿function spBulkInsert(docs) {
-    if (!docs) {
-        throw new Error("Documents empty");
-    }
+﻿function spBulkInsert(items) {
+    if (typeof items === "string") items = JSON.parse(items);
 
-    var context = getContext();
-    var collection = context.getCollection();
+    var collection = getContext().getCollection();
     var collectionLink = collection.getSelfLink();
-    var response = context.getResponse();
+    var count = 0;
 
-    var docCount = docs.length;
+    if (!items) throw new Error("Documents empty");
+    
+    var numItems = items.length;
 
-    if (docCount === 0) {
-        response.setBody(0);
+    if (numItems == 0) {
+        getContext().getResponse().setBody(0);
         return;
     }
 
-    var count = 0;
-    createDoc(docs[0]);
+    tryCreate(items[count], callback);
 
-    function createDoc(doc) {
-        var isAccepted = collection.createDocument(collectionLink, doc, function (err, doc) {
-            if (err) {
-                throw err;
-            }
-            count++;
-            if (count === docCount) {
-                response.setBody(count);
-            }
-            else {
-                createDoc(docs[count]);
-            }
-        });
+    function tryCreate(item, callback) {
 
-        if (!isAccepted) {
-            response.setBody(count);
+        var isAccepted = collection.createDocument(collectionLink, item, callback);
+
+        if (!isAccepted) getContext().getResponse().setBody(count);
+    }
+
+    function callback(err, item) {
+        if (err) throw err;
+        count++;
+        if (count >= numItems) {
+            getContext().getResponse().setBody(count);
+        } else {
+            tryCreate(items[count], callback);
         }
     }
 }

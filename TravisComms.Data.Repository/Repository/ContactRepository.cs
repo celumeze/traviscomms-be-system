@@ -1,7 +1,11 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Dynamic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravisComms.Data.Entities.Models;
@@ -13,9 +17,19 @@ namespace TravisComms.Data.Repository.Repository
 {
     public class ContactRepository : IContactRepository
     {
+        public async Task<dynamic> AddBatchContactDetails(IEnumerable<dynamic> lstContactDetails, Guid accountHolderId)
+        {
+            var partitionKey = new PartitionKey(accountHolderId.ToString());
+            string json = await CosmosHelper.Execute_spBulkInsertItems(StoreConstants.TravisCosmosDb,
+                                                                  StoreConstants.ContactContainerId,
+                                                                  lstContactDetails, partitionKey);
+
+            if (!string.IsNullOrEmpty(json)) return JsonConvert.DeserializeObject<dynamic>(json, new ExpandoObjectConverter());
+            return null;
+        }
+
         public async Task<Contact> AddContactDetails(Contact contactDetails)
         {
-            contactDetails.Id = Guid.NewGuid();
             var partitionKey = new PartitionKey(contactDetails.AccountHolderId.ToString());
             string json = await CosmosHelper.Execute_spInsertItem(StoreConstants.TravisCosmosDb, 
                                                                   StoreConstants.ContactContainerId, 
