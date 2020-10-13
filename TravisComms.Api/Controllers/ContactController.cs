@@ -95,8 +95,7 @@ namespace TravisComms.Api.Controllers
                 var contactsCsvDto = ControllerHelper.CreateContactsCsvInfo(file, nameValueCollection);
                 contactsCsvDto.accountHolderId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == "AccountHolderId")?.Value);
 
-                if (contactsCsvDto.file is object && contactsCsvDto.file.Length > 0 && 
-                    !string.IsNullOrWhiteSpace(contactsCsvDto.ContactHeader.contactNumberHeader))
+                if (contactsCsvDto.file is object && contactsCsvDto.file.Length > 0)
                 {
                     contactsCsvDto.fileName = Path.GetTempFileName();
 
@@ -116,7 +115,7 @@ namespace TravisComms.Api.Controllers
                 }
                 else
                 {
-                    return BadRequest();
+                    return BadRequest("Bad Text");
                 }            
         }
     }

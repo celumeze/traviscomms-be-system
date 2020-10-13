@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TravisComms.CsvProcessing.Helper;
+using TravisComms.CsvProcessing.Exceptions;
 using TravisComms.CsvProcessing.Mapper;
 using TravisComms.CsvProcessing.Processors;
 using TravisComms.Data.Entities.Models;
@@ -41,5 +41,23 @@ namespace TravisComms.Processor.Tests
             records.Count().Should().Be(expectedNumOfRows-1);
         }
 
-   }
+        [Theory]
+        [MemberData(nameof(ContactsCsvTestData.ContactsTestWithoutNumberOfRows), MemberType = typeof(ContactsCsvTestData))]
+        public async Task ContactsCsvParser_HaveContactsCsvFileUploaded_ShouldThrowExceptionWhenContactNumberHeaderNotInFile(string fileName, string delimiter)
+        {
+            //Arrrange
+            ContactsCsvParser contactsCsvParser = new ContactsCsvParser();
+            ContactHeader contactsHeader = new ContactHeader { contactNumberHeader = "wrongContactNumberHeader", firstNameHeader = "firstName", lastNameHeader = "lastName" };
+            string separator = delimiter;
+            Guid accountHolderId = Guid.NewGuid();
+
+            //Act
+            await using (var fileStream = new FileStream(fileName, FileMode.Open))
+            {
+                fileStream.Position = 0;
+                Assert.Throws<ContactsCsvException>(() => contactsCsvParser.ParseContactsCsv(fileStream, separator, contactsHeader, accountHolderId));
+            }
+        }
+
+    }
 }

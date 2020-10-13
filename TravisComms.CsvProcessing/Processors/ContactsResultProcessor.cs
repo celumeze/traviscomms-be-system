@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using TravisComms.CsvProcessing.Helper;
+using TravisComms.CsvProcessing.Exceptions;
 using TravisComms.CsvProcessing.Interfaces;
 using TravisComms.CsvProcessing.Mapper;
 using TravisComms.Data.Repository.Interfaces;

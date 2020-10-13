@@ -15,5 +15,15 @@ namespace TravisComms.Processor.Tests.ExtTestData
                 yield return new object[] { @"ExtTestData\Contacts3.csv", 10375, "|" };
             }
         }
+
+        public static IEnumerable<object[]> ContactsTestWithoutNumberOfRows
+        {
+            get
+            {
+                yield return new object[] { @"ExtTestData\Contacts1.csv", "," };
+                yield return new object[] { @"ExtTestData\Contacts2.csv", "," };
+                yield return new object[] { @"ExtTestData\Contacts3.csv", "|" };
+            }
+        }
     }
 }

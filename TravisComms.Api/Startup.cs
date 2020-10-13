@@ -135,7 +135,7 @@ namespace TravisComms.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();              
+                app.UseExceptionHandler("/exceptionerror");
             }
             else
             {

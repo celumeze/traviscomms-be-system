@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
-using TravisComms.CsvProcessing.Helper;
+using TravisComms.CsvProcessing.Exceptions;
 using TravisComms.CsvProcessing.Interfaces;
 using TravisComms.CsvProcessing.Mapper;
 using TravisComms.Data.Entities.Models;
@@ -29,14 +29,22 @@ namespace TravisComms.CsvProcessing.Processors
                         csvReader.Configuration.TrimOptions = CsvHelper.Configuration.TrimOptions.Trim;
                         csvReader.Configuration.Delimiter = separator;
                         csvReader.Configuration.HasHeaderRecord = true;
-                       
+                                              
                         var records =  csvReader.GetRecords<dynamic>()?.ToList();
-                        if(records != null)
-                        {                          
+                       
+                        //if specified contact number header not found
+                        //throw an exception
+                        string[] headerRows = csvReader.Context.HeaderRecord;                     
+                            if (!headerRows.Any( c => c == contactHeader.contactNumberHeader)) 
+                                throw new ContactsCsvException(ExceptionMessages.InvalidContactNumberHeaderOrSeparator);
+
+                        if (records != null)
+                        {                            
                             //update non header records
                             foreach (var record in records)
-                            {
+                            {                                
                                 record.isHeader = false.ToString().ToLower();
+                                record.isUploadedFromCsv = true.ToString().ToLower();
                                 record.id = Guid.NewGuid().ToString();
                                 record.accountHolderId = accountHolderId.ToString();
                             }
