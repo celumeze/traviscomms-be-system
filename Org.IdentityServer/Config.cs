@@ -32,7 +32,7 @@ namespace Org.IdentityServer
                 new Client
                 {
 
-                    AccessTokenLifetime = 120,
+                    AccessTokenLifetime = 3600,
                     ClientId = "traviscomms-desktop",
                     ClientName = "TravisComms",
                     RequireClientSecret = false,
@@ -53,7 +53,7 @@ namespace Org.IdentityServer
                 new Client
                 {
 
-                    AccessTokenLifetime = 120,
+                    AccessTokenLifetime = 3600,
                     ClientId = "traviscomms-webui",
                     ClientName = "TravisComms",
                     RequireClientSecret = false,

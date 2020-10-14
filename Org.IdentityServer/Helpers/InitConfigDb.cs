@@ -30,8 +30,8 @@ namespace Org.IdentityServer.Helpers
                 });
                 //var client = context.Clients.FirstOrDefault();
                 //foreach(var client in context.Clients)
-                 // context.Clients.Remove(client);
-               // context.SaveChanges();
+                  //context.Clients.Remove(client);
+                //context.SaveChanges();
             }
         }
 

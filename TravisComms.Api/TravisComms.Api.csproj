@@ -24,6 +24,7 @@
 
   <ItemGroup>  
     <ProjectReference Include="..\TravisComms.Common.Service\TravisComms.Sender.Module.csproj" />  
+    <ProjectReference Include="..\TravisComms.CsvProcessing\TravisComms.CsvProcessing.csproj" />  
     <ProjectReference Include="..\TravisComms.Data.Entities\TravisComms.Data.Entities.csproj" />    
     <ProjectReference Include="..\TravisComms.Data.Repository\TravisComms.Data.Repository.csproj" />    
     <ProjectReference Include="..\TravisComms.Service.Entities\TravisComms.Messaging.csproj" />

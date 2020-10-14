@@ -16,6 +16,11 @@ using TravisComms.Api.Dto;
 using TravisComms.Api.Middleware;
 using TravisComms.Sender.Module;
 using IdentityServer4.AccessTokenValidation;
+using TravisComms.CsvProcessing.Interfaces;
+using TravisComms.CsvProcessing.Processors;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using TravisComms.Api.HostedServices;
 
 namespace TravisComms.Api
 {
@@ -70,8 +75,15 @@ namespace TravisComms.Api
             Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
             StartupDb.ConfigureApiResourceStore(services, sqlDbConfig);
             StartupDb.ConfigureApiCosmosDb(cosmosDbConfig);
+            services.TryAddSingleton<IContactsCsvParser, ContactsCsvParser>();
+            services.TryAddScoped<IContactsResultProcessor, ContactsResultProcessor>();
+
             //Service Bus                        
             StartupMessenger.ConfigureServiceBus(services, Configuration);
+
+            //Add Hosted/Background Services
+            services.AddSingleton<ContactsCsvParsingChannel>();
+            services.AddHostedService<ContactsCsvProcessingService>();
             
 
             //enable Cross Origin Site Requests
@@ -105,7 +117,17 @@ namespace TravisComms.Api
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddNewtonsoftJson();
+
+            //automapper
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+            //for file download
+            services.Configure<FormOptions>(f =>
+            {
+                f.ValueLengthLimit = int.MaxValue;
+                f.MultipartBodyLengthLimit = int.MaxValue;
+                f.MemoryBufferThreshold = int.MaxValue;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -113,7 +135,7 @@ namespace TravisComms.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();              
+                app.UseExceptionHandler("/exceptionerror");
             }
             else
             {

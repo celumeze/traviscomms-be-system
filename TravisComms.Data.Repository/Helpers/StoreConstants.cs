@@ -9,7 +9,7 @@ namespace TravisComms.Data.Repository.Helpers
         public const string TravisCosmosDb = "TravisCommsCosmosDb";
         public const string ContactContainerId = "ContactDetails";
         public const string InsertStoredProc = "spInsert";
-        public const string InsertBatchStoredProc = "spInsertBatch";
+        public const string InsertBatchStoredProc = "spBulkInsert";
         public const string UpdateStoredProc = "spUpdate";
     }
 }
