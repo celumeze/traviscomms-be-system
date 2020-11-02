@@ -26,6 +26,7 @@ namespace TravisComms.Api.Controllers
         private readonly IMapper _mapper;
         private readonly IContactRepository _contactRepository;
         private readonly IContactsResultProcessor _contactsResultProcessor;
+       
 
         public ContactController(ILogger<ContactController> logger, IMapper mapper, 
             IContactRepository contactRepository, IContactsResultProcessor contactsResultProcessor)
@@ -42,6 +43,7 @@ namespace TravisComms.Api.Controllers
         public async Task<IActionResult> GetContacts()
         {
             var accountHolderId = User.Claims.FirstOrDefault(c => c.Type == "AccountHolderId")?.Value;
+            //var er = acId;
             if(!string.IsNullOrEmpty(accountHolderId))
             {
                 var contacts = await _contactRepository.GetContactDetailsAsync(accountHolderId);
@@ -86,6 +88,35 @@ namespace TravisComms.Api.Controllers
             return BadRequest();
         }
 
+        [HttpPost]
+        [Route("api/deletecontacts")]
+        public async Task<IActionResult> DeleteContacts([FromBody] IEnumerable<ContactDto> lstContacts)
+        {
+            if (lstContacts != null)
+            {
+                var accountHolderIdClaim = User.Claims.FirstOrDefault(c => c.Type == "AccountHolderId")?.Value;
+                var deletedContacts = await _contactRepository.DeleteContactDetails(_mapper.Map<List<Contact>>(lstContacts), Guid.Parse(accountHolderIdClaim));
+                if (deletedContacts != null)
+                {
+                    return Ok(deletedContacts);
+                }
+            }
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("api/deleteallcontacts")]
+        public async Task<IActionResult> DeleteContacts()
+        {            
+            var accountHolderIdClaim = User.Claims.FirstOrDefault(c => c.Type == "AccountHolderId")?.Value;
+            var isAllContactsDeleted = await _contactRepository.DeleteAllContactDetails(Guid.Parse(accountHolderIdClaim));
+            if (isAllContactsDeleted)
+            {
+                return Ok(isAllContactsDeleted);
+            }            
+            return BadRequest();
+        }
+
         [HttpPost, DisableRequestSizeLimit]
         [Route("api/uploadcontactscsv")]
         public async Task<IActionResult> UploadContactsCsv()
@@ -115,7 +146,8 @@ namespace TravisComms.Api.Controllers
                 }
                 else
                 {
-                    return BadRequest("Bad Text");
+                    System.IO.File.Delete(contactsCsvDto.fileName);
+                    return BadRequest("File not found");
                 }            
         }
     }
