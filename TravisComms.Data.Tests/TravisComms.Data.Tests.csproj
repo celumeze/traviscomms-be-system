@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>    
+    <ProjectReference Include="..\TravisComms.Data.Entities\TravisComms.Data.Entities.csproj" />    
     <ProjectReference Include="..\TravisComms.Data.Repository\TravisComms.Data.Repository.csproj" />
   </ItemGroup>
 

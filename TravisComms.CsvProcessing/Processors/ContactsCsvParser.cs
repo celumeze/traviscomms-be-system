@@ -42,7 +42,12 @@ namespace TravisComms.CsvProcessing.Processors
                         {                            
                             //update non header records
                             foreach (var record in records)
-                            {                                
+                            {
+                                IDictionary<string, object> recordPair = record;
+                                if (string.IsNullOrWhiteSpace(recordPair[contactHeader.contactNumberHeader]?.ToString()))
+                                    throw new ContactsCsvException(ExceptionMessages.MissingContactNumber);
+                                if (recordPair[contactHeader.contactNumberHeader]?.ToString().Length > 20)
+                                    throw new ContactsCsvException(ExceptionMessages.ContactNumberExceededLength);
                                 record.isHeader = false.ToString().ToLower();
                                 record.isUploadedFromCsv = true.ToString().ToLower();
                                 record.id = Guid.NewGuid().ToString();

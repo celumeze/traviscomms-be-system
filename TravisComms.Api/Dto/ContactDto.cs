@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace TravisComms.Api.Dto
         public string FirstName { get; set; }
         [MaxLength(100)]
         public string LastName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Contact number is required")]
         [MaxLength(20)]
         public string ContactNumber { get; set; }
         public Guid AccountHolderId { get; set; }     
