@@ -23,7 +23,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravisComms.Api.Integration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravisComms.CsvProcessing", "TravisComms.CsvProcessing\TravisComms.CsvProcessing.csproj", "{B341A416-9177-4A34-8FC8-6B435E1EE394}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravisComms.Processor.Tests", "TravisComms.Processor.Tests\TravisComms.Processor.Tests.csproj", "{D98C477C-E424-48C6-ADB2-A170B30EEAE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravisComms.Processor.Tests", "TravisComms.Processor.Tests\TravisComms.Processor.Tests.csproj", "{D98C477C-E424-48C6-ADB2-A170B30EEAE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AE6C7D89-295F-4B57-AE58-CCFECABD6D49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{22E1FCDE-09F0-4758-AA5B-F203B3275924}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{85342F26-126E-4DE8-A14F-B18B3D895E6A}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{ED861A0B-ABF8-420F-A29E-3DBF47D87E8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,9 +83,18 @@ Global
 		{D98C477C-E424-48C6-ADB2-A170B30EEAE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D98C477C-E424-48C6-ADB2-A170B30EEAE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D98C477C-E424-48C6-ADB2-A170B30EEAE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED861A0B-ABF8-420F-A29E-3DBF47D87E8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED861A0B-ABF8-420F-A29E-3DBF47D87E8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED861A0B-ABF8-420F-A29E-3DBF47D87E8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED861A0B-ABF8-420F-A29E-3DBF47D87E8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{60C0A514-27E4-46ED-A6DF-B06219B489AC} = {85342F26-126E-4DE8-A14F-B18B3D895E6A}
+		{22E1FCDE-09F0-4758-AA5B-F203B3275924} = {AE6C7D89-295F-4B57-AE58-CCFECABD6D49}
+		{85342F26-126E-4DE8-A14F-B18B3D895E6A} = {22E1FCDE-09F0-4758-AA5B-F203B3275924}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6F673F85-AFC3-4439-8893-7DBB182F67D6}

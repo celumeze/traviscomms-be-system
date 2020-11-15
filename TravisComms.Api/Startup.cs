@@ -21,6 +21,7 @@ using TravisComms.CsvProcessing.Processors;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using TravisComms.Api.HostedServices;
+using Org.IdentityServer.Infrastructure;
 
 namespace TravisComms.Api
 {
@@ -69,14 +70,14 @@ namespace TravisComms.Api
                         options.RequireHttpsMetadata = true;
                     });
 
-            CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
-            SQLDbConfig sqlDbConfig = new SQLDbConfig();
-            Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);
-            Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
-            StartupDb.ConfigureApiResourceStore(services, sqlDbConfig);
-            StartupDb.ConfigureApiCosmosDb(cosmosDbConfig);
-            services.TryAddSingleton<IContactsCsvParser, ContactsCsvParser>();
-            services.TryAddScoped<IContactsResultProcessor, ContactsResultProcessor>();
+            //CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
+            Org.IdentityServer.Infrastructure.SQLDbConfig sqlDbConfig = new Org.IdentityServer.Infrastructure.SQLDbConfig();
+            Configuration.Bind(nameof(Org.IdentityServer.Infrastructure.SQLDbConfig), sqlDbConfig);
+            //Configuration.Bind(nameof(CosmosDbConfig), cosmosDbConfig);
+            StartupConfig.ConfigureApiResourceStore(services, sqlDbConfig);
+            //StartupDb.ConfigureApiCosmosDb(cosmosDbConfig);
+            //services.TryAddSingleton<IContactsCsvParser, ContactsCsvParser>();
+            //services.TryAddScoped<IContactsResultProcessor, ContactsResultProcessor>();
 
             //Service Bus                        
             StartupMessenger.ConfigureServiceBus(services, Configuration);

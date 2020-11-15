@@ -2,10 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Org.IdentityServer.Data;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -36,6 +39,7 @@ namespace Org.IdentityServer
 
             try
             {
+                
                 var seed = args.Contains("/seed");
                 if (seed)
                 {
@@ -43,12 +47,23 @@ namespace Org.IdentityServer
                 }
 
                 var host = CreateHostBuilder(args).Build();
+                using var scope = host.Services.CreateScope();
+                var services = scope.ServiceProvider;
 
+                var dbContext = services.GetRequiredService<TravisCommsIdentityDbContext>();
+                var dbContextConfiguration = services.GetRequiredService<ConfigurationDbContext>();
+                var dbContextPersistedGrant = services.GetRequiredService<PersistedGrantDbContext>();
+                if (dbContext.Database.IsSqlServer() && dbContextConfiguration.Database.IsSqlServer() && dbContextPersistedGrant.Database.IsSqlServer())
+                {
+                    dbContext.Database.Migrate();
+                    dbContextConfiguration.Database.Migrate();
+                    dbContextPersistedGrant.Database.Migrate();
+                }
                 if (seed)
                 {
                     Log.Information("Seeding database...");
                     var config = host.Services.GetRequiredService<IConfiguration>();
-                    var connectionString = config.GetConnectionString("DefaultConnection");
+                    var connectionString = config.GetConnectionString("SQLDBConfig:ConnectionString");
                     //SeedData.EnsureSeedData(connectionString);
                     Log.Information("Done seeding database.");
                     return 0;

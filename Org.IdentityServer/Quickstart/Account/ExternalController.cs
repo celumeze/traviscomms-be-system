@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using TravisComms.Data.Repository.IdentityModels;
+using Org.IdentityServer.Models;
 
 namespace IdentityServer4.Quickstart.UI
 {
