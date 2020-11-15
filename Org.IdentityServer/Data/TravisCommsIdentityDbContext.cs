@@ -1,21 +1,19 @@
-﻿using TravisComms.Data.Entities;
-using TravisComms.Data.Entities.Models;
-using TravisComms.Data.Repository.IdentityModels;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Org.IdentityServer.Extensions;
+using Org.IdentityServer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TravisComms.Data.Repository
+namespace Org.IdentityServer.Data
 {
-    public class TravisCommsSqlDbContext : IdentityDbContext<MainUser, MainRole, string>
+    public class TravisCommsIdentityDbContext : IdentityDbContext<MainUser, MainRole, string>
     {
-      
-        public TravisCommsSqlDbContext(DbContextOptions<TravisCommsSqlDbContext> options) : base(options)
+
+        public TravisCommsIdentityDbContext(DbContextOptions<TravisCommsIdentityDbContext> options) : base(options)
         {
         }
 
@@ -23,7 +21,7 @@ namespace TravisComms.Data.Repository
         {
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                if(!entityType.IsOwned())
+                if (!entityType.IsOwned())
                 {
                     modelBuilder.Entity(entityType.Name).Property<string>(nameof(EntityBase.CreatedBy));
                     modelBuilder.Entity(entityType.Name).Property<DateTime>(nameof(EntityBase.DateCreated));
@@ -36,8 +34,8 @@ namespace TravisComms.Data.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(TravisCommsSqlDbContext).Assembly);
-            //modelBuilder.Seed();
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(TravisCommsIdentityDbContext).Assembly);
+            modelBuilder.Seed();
             AuditShadowProperties(modelBuilder);
         }
 
@@ -86,8 +84,6 @@ namespace TravisComms.Data.Repository
         }
 
 
-        public DbSet<AccountHolderServiceProvider> AccountHoldersServiceProviders { get; set; }
-        public DbSet<ServiceProvider> ServiceProviders { get; set; }
         public DbSet<SubscriptionType> SubscriptionTypes { get; set; }
         public DbSet<AccountHolder> AccountHolders { get; set; }
         public DbSet<AccountHolderRole> AccountHoldersRole { get; set; }

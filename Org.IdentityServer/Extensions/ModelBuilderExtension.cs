@@ -1,13 +1,7 @@
-﻿using TravisComms.Data.Entities.Enums;
-using TravisComms.Data.Entities.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Org.IdentityServer.Enums;
+using Org.IdentityServer.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TravisComms.Data.Repository.IdentityModels;
-using IdentityServer4.EntityFramework.Entities;
 using System.Globalization;
 
 namespace Org.IdentityServer.Extensions
@@ -16,38 +10,10 @@ namespace Org.IdentityServer.Extensions
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {            
-                SeedServiceProviders(modelBuilder);
                 SeedSubscriptionTypes(modelBuilder);
                 SeedAccountHolderRole(modelBuilder);
         }
 
-        private static void SeedServiceProviders(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ServiceProvider>().HasData(            
-                new ServiceProvider
-                {
-                    ServiceProviderId = Guid.Parse("3F6625AE-9FCA-4975-99C2-2CA362E55825"),
-                    Name = "Twilio",
-                    DateCreated = DateTime.ParseExact("17/04/2020 18:15:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("en-gb")),
-                    CreatedBy = "TravisComms\\System"
-                },
-                new ServiceProvider
-                {
-                    ServiceProviderId = Guid.Parse("8B07F619-CFF8-4795-9A22-CBCA1493CF02"),
-                    Name = "Vonage",
-                    DateCreated = DateTime.ParseExact("17/04/2020 18:15:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("en-gb")),
-                    CreatedBy = "TravisComms\\System"
-                },
-                 new ServiceProvider
-                 {
-                     ServiceProviderId = Guid.Parse("873C3886-CE7D-42BD-B48C-05F41B36212F"),
-                     Name = "Whatsapp",
-                     DateCreated = DateTime.ParseExact("17/04/2020 18:15:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.GetCultureInfo("en-gb")),
-                     CreatedBy = "TravisComms\\System"
-                 }
-
-            );   
-        }
 
         private static void SeedSubscriptionTypes(ModelBuilder modelBuilder)
         {

@@ -3,18 +3,15 @@
 
 
 using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Org.IdentityServer.Helpers;
+using Org.IdentityServer.Infrastructure;
 using System;
 using System.Linq;
-using TravisComms.Data.Repository;
-using TravisComms.Data.Repository.Bindings;
 
 namespace Org.IdentityServer
 {
@@ -22,6 +19,7 @@ namespace Org.IdentityServer
     {       
         public IWebHostEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
+
 
         public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
@@ -31,13 +29,13 @@ namespace Org.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+            
             // uncomment, if you want to add an MVC-based UI
             services.AddControllersWithViews();
 
-            CosmosDbConfig cosmosDbConfig = new CosmosDbConfig();
             SQLDbConfig sqlDbConfig = new SQLDbConfig();
             Configuration.Bind(nameof(SQLDbConfig), sqlDbConfig);            
-            var builder = StartupDb.ConfigureServices(services, sqlDbConfig);           
+            var builder = StartupConfig.ConfigureServices(services, sqlDbConfig);           
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
