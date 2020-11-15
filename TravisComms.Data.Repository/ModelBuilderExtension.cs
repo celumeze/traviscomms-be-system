@@ -10,7 +10,7 @@ using TravisComms.Data.Repository.IdentityModels;
 using IdentityServer4.EntityFramework.Entities;
 using System.Globalization;
 
-namespace Org.IdentityServer.Extensions
+namespace TravisComms.Data.Repository
 {
     public static class ModelBuilderExtension
     {
